@@ -25,4 +25,4 @@ How to Run Project
 
 Copyright and license
 ---------------------
-Code and documentation copyright 2015 Troy Mullins. Code released under [the MIT license](https://github.com/Mullinst/SER-FP/blob/master/LICENSE).
+Code and documentation copyright 2016 Troy Mullins. Code released under [the MIT license](https://github.com/Mullinst/SER-FP/blob/master/LICENSE).
