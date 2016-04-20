@@ -27,9 +27,9 @@ How to Run Project
 
 How to Close Project
 --------------------
-	* `control c` to interupt python. 
-	* `exit` to ssh.
-	* `vagrant down` to shutdown virtual machine. 
+	1. `control c` to interupt python. 
+	2. `exit` to ssh.
+	3. `vagrant down` to shutdown virtual machine. 
 	
 Useful Documentation
 ---------------------
