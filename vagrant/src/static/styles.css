@@ -1,0 +1,14 @@
+body {
+	background: lightgrey;
+}
+
+.red {
+	color: red;
+}
+
+.content {
+	background: white;
+	border: 1px solid black;
+	background-clip: border-box;
+	border-radius: 15px;
+}
