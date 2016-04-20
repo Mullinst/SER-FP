@@ -24,10 +24,21 @@ How to Run Project
 	* `\q` to exit database.
 	* `python project.py` to run project.
 	* Open browser to `https://localhost:8000`
+
+How to Close Project
+--------------------
+	* `control c` to interupt python. 
+	* `exit` to ssh.
+	* `vagrant down` to shutdown virtual machine. 
 	
-Documentation for technologies used
+Useful Documentation
 ---------------------
+[Python 2.7](https://www.python.org/download/releases/2.7/)
+[PEP 8](https://www.python.org/dev/peps/pep-0008/)
+[Flask](http://flask.pocoo.org/docs/0.10/quickstart/)
+[jinja2](http://jinja.pocoo.org/docs/dev/)
 [Bootstrap](http://getbootstrap.com/)
+[MDN](https://developer.mozilla.org/en-US/)
 
 
 Copyright and license
