@@ -33,12 +33,12 @@ How to Close Project
 
 Useful Documentation
 ---------------------
-[Python 2.7](https://www.python.org/download/releases/2.7/)
-[PEP 8](https://www.python.org/dev/peps/pep-0008/)
-[Flask](http://flask.pocoo.org/docs/0.10/quickstart/)
-[jinja2](http://jinja.pocoo.org/docs/dev/)
-[Bootstrap](http://getbootstrap.com/)
-[MDN](https://developer.mozilla.org/en-US/)
+* [Python 2.7](https://www.python.org/download/releases/2.7/)
+* [PEP 8](https://www.python.org/dev/peps/pep-0008/)
+* [Flask](http://flask.pocoo.org/docs/0.10/quickstart/)
+* [jinja2](http://jinja.pocoo.org/docs/dev/)
+* [Bootstrap](http://getbootstrap.com/)
+* [MDN](https://developer.mozilla.org/en-US/)
 
 Basic git commands
 --------------------
