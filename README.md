@@ -58,4 +58,4 @@ Commit Message Format
 
 Copyright and license
 ---------------------
-Code and documentation copyright 2016 Troy Mullins. Code released under [the MIT license](https://github.com/Mullinst/SER-FP/blob/master/LICENSE).
+Code and documentation copyright 2016 Robert King, Jacky Liang, Troy Mullins, and Thomas Norby. Code released under [the MIT license](https://github.com/Mullinst/SER-FP/blob/master/LICENSE).

@@ -1,7 +1,7 @@
 /*
-Copyright 2015 Troy Mullins
+Copyright 2016 Robert King, Jacky Liang, Troy Mullins, and Thomas Norby
 Licensed under MIT 
-(https://github.com/Mullinst/Project2/blob/master/LICENSE)
+(https://github.com/Mullinst/SER-FP/blob/master/LICENSE)
 
 Table definitions for the tournament project.
 */
