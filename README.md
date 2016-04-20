@@ -40,6 +40,20 @@ Useful Documentation
 [Bootstrap](http://getbootstrap.com/)
 [MDN](https://developer.mozilla.org/en-US/)
 
+Basic git commands
+--------------------
+	*`git clone https://github.com/Mullinst/SER-FP.git` to clone this repository.
+	*`git pull` to pull recent commits.
+	*`git add <filename>` to add file to commit.
+	*`git commit -m 'commit message'` to commit changes to local repository.
+	*`git push` to push local commits to github.
+
+Commit Message Format
+---------------------
+	*`docs: ` for documentation.
+	*`feat: ` for new feature.
+	*`refactor: ` for refactoring.
+	*`style: ` for style changes.
 
 Copyright and license
 ---------------------
