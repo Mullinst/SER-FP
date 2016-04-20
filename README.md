@@ -25,11 +25,13 @@ How to Run Project
 	* `python project.py` to run project.
 	* Open browser to `https://localhost:8000`
 
+
 How to Close Project
 --------------------
 * `control c` to interupt python.
 * `exit` to exit ssh.
 * `vagrant down` to shutdown virtual machine. 
+
 
 Useful Documentation
 ---------------------
@@ -40,6 +42,7 @@ Useful Documentation
 * [Bootstrap](http://getbootstrap.com/)
 * [MDN](https://developer.mozilla.org/en-US/)
 
+
 Basic git commands
 --------------------
 * `git clone https://github.com/Mullinst/SER-FP.git` to clone this repository.
@@ -48,6 +51,7 @@ Basic git commands
 * `git commit -m 'commit message'` to commit changes to local repository.
 * `git push` to push local commits to github.
 
+
 Commit Message Format
 ---------------------
 * `docs:` for documentation.
@@ -55,6 +59,7 @@ Commit Message Format
 * `fix:` for bug fixes.
 * `refactor:` for refactoring.
 * `style:` for style changes.
+
 
 Copyright and license
 ---------------------
