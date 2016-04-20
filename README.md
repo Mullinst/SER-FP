@@ -20,7 +20,14 @@ How to Run Project
 	* `cd /vagrant​` to change directory to the s​ynced folders.
 	* `cd src/` to change directory to src.
 	* `psql` to access postgresql.
-	* `\i example.sql` to create example database.
+	* `\i filername.sql` to create filername database.
+	* `\q` to exit database.
+	* `python project.py` to run project.
+	* Open browser to `https://localhost:8000`
+	
+Documentation for technologies used
+---------------------
+[Bootstrap](http://getbootstrap.com/)
 
 
 Copyright and license
