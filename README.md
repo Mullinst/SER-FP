@@ -27,10 +27,10 @@ How to Run Project
 
 How to Close Project
 --------------------
-	1. `control c` to interupt python. 
-	2. `exit` to ssh.
-	3. `vagrant down` to shutdown virtual machine. 
-	
+* `control c` to interupt python.
+* `exit` to exit ssh.
+* `vagrant down` to shutdown virtual machine. 
+
 Useful Documentation
 ---------------------
 [Python 2.7](https://www.python.org/download/releases/2.7/)
@@ -42,19 +42,19 @@ Useful Documentation
 
 Basic git commands
 --------------------
-	* `git clone https://github.com/Mullinst/SER-FP.git` to clone this repository.
-	* `git pull` to pull recent commits.
-	* `git add <filename>` to add file to commit.
-	* `git commit -m 'commit message'` to commit changes to local repository.
-	* `git push` to push local commits to github.
+* `git clone https://github.com/Mullinst/SER-FP.git` to clone this repository.
+* `git pull` to pull recent commits.
+* `git add <filename>` to add file to commit.
+* `git commit -m 'commit message'` to commit changes to local repository.
+* `git push` to push local commits to github.
 
 Commit Message Format
 ---------------------
-	* `docs:` for documentation.
-	* `feat:` for new feature.
-	* `fix:` for bug fixes.
-	* `refactor:` for refactoring.
-	* `style:` for style changes.
+* `docs:` for documentation.
+* `feat:` for new feature.
+* `fix:` for bug fixes.
+* `refactor:` for refactoring.
+* `style:` for style changes.
 
 Copyright and license
 ---------------------
