@@ -15,18 +15,8 @@ import requests
 
 app = Flask(__name__)
 
-# Database functions
-def connect(database_name="tournament"):
-    """Connect to the PostgreSQL database.  Returns a database connection."""
-    try:
-        db = psycopg2.connect("dbname={}".format(database_name))
-        cursor = db.cursor()
-        return db, cursor
-    except:
-        print("Error connecting to the database: {}".format(database_name))
 
-
-# Show catalog
+# Show homepage
 @app.route('/')
 def showHome():
     return render_template('home.html')
