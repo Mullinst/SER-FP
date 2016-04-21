@@ -30,7 +30,7 @@ How to Close Project
 --------------------
 * `control c` to interupt python.
 * `exit` to exit ssh.
-* `vagrant down` to shutdown virtual machine. 
+* `vagrant halt` to shutdown virtual machine. 
 
 
 Useful Documentation
