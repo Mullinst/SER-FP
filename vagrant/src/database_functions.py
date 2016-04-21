@@ -9,7 +9,7 @@
 import psycopg2
 
 
-def connect(database_name="tournament"):
+def connect(database_name="database"):
     """Connect to the PostgreSQL database.  Returns a database connection."""
     try:
         db = psycopg2.connect("dbname={}".format(database_name))
@@ -18,15 +18,30 @@ def connect(database_name="tournament"):
     except:
         print("Error connecting to the database: {}".format(database_name))
 
-
-
-""" Basic Function Template """
-""" 
-def foo():
-    """docstring"""
+# User Helper Functions
+def createUser(login_session):
+    """creates a user"""
     db, cursor = connect()
-    query = "sql here"
-    cursor.execute(query)
+    name = login_session['username']
+    email = login_session['email']
+    picture = login_session['picture']
+    query = "INSERT INTO players (name, email, picture) VALUES (%s);"
+    param = (name, email, picture)
+    cursor.execute(query, param)
     db.commit()
+    query = "SELECT id FROM Users WHERE email = {}".format(email)
+    user_id = cursor.execute(query)
     db.close()
-"""
+    return user_id
+
+
+def getUserID(email):
+    try:
+        db, cursor = connect()
+        email = login_session['email']
+        query = "SELECT id FROM Users WHERE email = {}".format(email)
+        user_id = cursor.execute(query)
+        db.close()
+        return user_id
+    except:
+        return None
