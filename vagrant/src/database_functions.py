@@ -17,3 +17,16 @@ def connect(database_name="tournament"):
         return db, cursor
     except:
         print("Error connecting to the database: {}".format(database_name))
+
+
+
+""" Basic Function Template """
+""" 
+def foo():
+    """docstring"""
+    db, cursor = connect()
+    query = "sql here"
+    cursor.execute(query)
+    db.commit()
+    db.close()
+"""
