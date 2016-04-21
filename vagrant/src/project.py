@@ -15,7 +15,7 @@ import httplib2
 import json
 from flask import make_response
 import requests
-import database_functions
+from database_functions import createUser, getUserID
 
 
 app = Flask(__name__)
@@ -91,7 +91,7 @@ def gconnect():
         return response
 
     # Store the access token in the session for later use.
-    login_session['credentials'] = credentials
+    login_session['credentials'] = credentials.access_token
     login_session['gplus_id'] = gplus_id
 
     # Get user info
@@ -104,6 +104,7 @@ def gconnect():
     login_session['username'] = data['name']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
+    type(login_session['email'])
 
     output = ''
     output += '<h1>Welcome, '
@@ -120,23 +121,34 @@ def gconnect():
 # DISCONNECT - Revoke a current user's token and reset their login_session
 @app.route('/gdisconnect')
 def gdisconnect():
-    # Only disconnect a connected user.
-    credentials = login_session.get('credentials')
-    if credentials is None:
-        response = make_response(
-            json.dumps('Current user not connected.'), 401)
+    access_token = login_session['credentials'].access_token
+    print 'In gdisconnect access token is %s', access_token
+    print 'User name is: ' 
+    print login_session['username']
+    if access_token is None:
+        print 'Access Token is None'
+        response = make_response(json.dumps('Current user not connected.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-    access_token = credentials.access_token
-    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % access_token
+    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
-    if result['status'] != '200':
-        # For whatever reason, the given token was invalid.
-        response = make_response(
-            json.dumps('Failed to revoke token for given user.', 400))
+    print 'result is '
+    print result
+    if result['status'] == '200':
+        del login_session['access_token'] 
+        del login_session['gplus_id']
+        del login_session['username']
+        del login_session['email']
+        del login_session['picture']
+        response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
+    else:
+        response = make_response(json.dumps('Failed to revoke token for given user.', 400))
+        response.headers['Content-Type'] = 'application/json'
+        return response
+
 
 # Show homepage
 @app.route('/')
