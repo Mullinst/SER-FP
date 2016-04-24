@@ -20,8 +20,7 @@ CREATE TABLE Users (
 	id serial PRIMARY KEY,
 	name text NOT NULL,
 	email text NOT NULL,
-	picture text NOT NULL,
-	storeID integer REFERENCES Stores
+	picture text NOT NULL
 );
 
 CREATE TABLE Permissions (
