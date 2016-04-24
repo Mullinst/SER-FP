@@ -2,17 +2,16 @@
 Copyright 2016 Robert King, Jacky Liang, Troy Mullins, and Thomas Norby
 Licensed under MIT 
 (https://github.com/Mullinst/SER-FP/blob/master/LICENSE)
-
-Table definitions for the tournament project.
 */
 
--- Create and connect to tournament database 
+-- Create and connect to database 
 CREATE DATABASE database; 
 \c database;
 
 -- Drop all previous tables
 DROP TABLE IF EXISTS Users CASCADE;
-
+DROP TABLE IF EXISTS Stores CASCADE;
+DROP TABLE IF EXISTS Shifts CASCADE;
 
 -- Define tables
 CREATE TABLE Users (
