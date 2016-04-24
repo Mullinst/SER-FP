@@ -10,15 +10,18 @@ CREATE DATABASE database;
 
 -- Drop all previous tables
 DROP TABLE IF EXISTS Users CASCADE;
+DROP TABLE IF EXISTS Permissions CASCADE;
 DROP TABLE IF EXISTS Stores CASCADE;
 DROP TABLE IF EXISTS Shifts CASCADE;
+
 
 -- Define tables
 CREATE TABLE Users (
 	id serial PRIMARY KEY,
 	name text NOT NULL,
 	email text NOT NULL,
-	picture text NOT NULL
+	picture text NOT NULL,
+	storeID integer REFERENCES Stores
 );
 
 CREATE TABLE Permissions (
@@ -27,7 +30,7 @@ CREATE TABLE Permissions (
 	accept boolean DEFAULT true,
 	approve_request boolean DEFAULT false,
 	delete_request boolean DEFAULT false
-);
+); 
 
 CREATE TABLE Stores (
 	storeID serial PRIMARY KEY,
