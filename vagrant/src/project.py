@@ -159,12 +159,13 @@ def showHome():
         return render_template('home.html')
 
 # Show My Shifts
-@app.route('/myShifts')
-def showMyShifts():
+@app.route('/profile')
+def showProfile():
+    user_id = getUserID(login_session.get('email'))
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
-        return render_template('myShifts.html')
+        return render_template('profile.html')
 
 
 
