@@ -20,7 +20,7 @@ def connect(database_name="database"):
 
 # User Helper Functions
 def createUser(login_session):
-    """creates a user"""
+    """ creates a user using login information """
     db, cursor = connect()
     name = login_session.get('username')
     email = login_session.get('email')
@@ -37,7 +37,22 @@ def createUser(login_session):
     return user_id
 
 
+def getUserInfo(user_id):
+    """ Returns user iformation for specified user """
+    try:
+        db, cursor = connect()
+        query = "SELECT * FROM Users WHERE id = %s"
+        param = (user_id,)
+        cursor.execute(query, param)
+        user = cursor.fetchall()
+        db.close()
+        return user
+    except:
+        return None
+
+
 def getUserID(email):
+    """ Returns user id associated with given email """
     try:
         db, cursor = connect()
         query = "SELECT id FROM Users WHERE email = %s"
