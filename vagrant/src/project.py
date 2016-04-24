@@ -103,7 +103,8 @@ def gconnect():
     login_session['username'] = data['name']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
-    createUser(login_session)
+    if getUserID(login_session.get('email')) is None:
+        createUser(login_session)
 
     output = ''
     output += '<h1>Welcome, '
