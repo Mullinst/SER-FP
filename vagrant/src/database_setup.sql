@@ -22,8 +22,23 @@ CREATE TABLE Users (
 	picture text NOT NULL
 );
 
+CREATE TABLE Stores (
+	storeID serial PRIMARY KEY,
+	storeManagerID integer REFERENCES Users,
+	location text
+);
+
+CREATE TABLE Shifts (
+	shiftID serial PRIMARY KEY,
+	startTime date,
+	endTime date,
+	storeID integer REFERENCES Stores
+);
+
 -- Define views
 CREATE VIEW user_count AS (
 	-- Count of players currently registerd
 	SELECT count(*) 
 	FROM Users);
+
+-- Define example data
