@@ -42,8 +42,7 @@ def gconnect():
         return response
     # Obtain authorization code
     code = request.data
-    print code
-    print request
+    
     try:
         # Upgrade the authorization code into a credentials object
         oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
@@ -57,7 +56,6 @@ def gconnect():
 
     # Check that the access token is valid.
     access_token = credentials.access_token
-    print access_token
     url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
            % access_token)
     h = httplib2.Http()
@@ -105,7 +103,7 @@ def gconnect():
     login_session['username'] = data['name']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
-    
+    createUser(login_session)
 
     output = ''
     output += '<h1>Welcome, '
