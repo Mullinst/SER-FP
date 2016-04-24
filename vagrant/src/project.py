@@ -158,6 +158,15 @@ def showHome():
     else:
         return render_template('home.html')
 
+# Show My Shifts
+@app.route('/myShifts')
+def showMyShifts():
+    if 'username' not in login_session:
+        return render_template('publicHome.html')
+    else:
+        return render_template('myShifts.html')
+
+
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
