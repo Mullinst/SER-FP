@@ -21,6 +21,14 @@ CREATE TABLE Users (
 	picture text NOT NULL
 );
 
+CREATE TABLE Permissions (
+	user_id integer REFERENCES Users,
+	post boolean DEFAULT true,
+	accept boolean DEFAULT true,
+	approve_request boolean DEFAULT false,
+	delete_request boolean DEFAULT false
+);
+
 CREATE TABLE Stores (
 	storeID serial PRIMARY KEY,
 	storeManagerID integer REFERENCES Users,
