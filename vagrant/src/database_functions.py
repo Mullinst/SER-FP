@@ -28,11 +28,14 @@ def createUser(login_session):
     query = "INSERT INTO Users (name, email, picture) VALUES (%s,%s,%s);"
     param = (name, email, picture,)
     cursor.execute(query, param)
-    db.commit()
     query = "SELECT id FROM Users WHERE email = %s"
     param = (email,)
     cursor.execute(query, param)
     user_id = cursor.fetchone()[0]
+    query = "INSERT INTO Permissions (user_id) VALUES (%s)"
+    param = (user_id,)
+    cursor.execute(query, param)
+    db.commit()
     db.close()
     return user_id
 
