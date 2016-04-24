@@ -22,15 +22,17 @@ def connect(database_name="database"):
 def createUser(login_session):
     """creates a user"""
     db, cursor = connect()
-    name = login_session['username']
-    email = login_session['email']
-    picture = login_session['picture']
-    query = "INSERT INTO players (name, email, picture) VALUES (%s);"
-    param = (name, email, picture)
+    name = login_session.get('username')
+    email = login_session.get('email')
+    picture = login_session.get('picture')
+    query = "INSERT INTO Users (name, email, picture) VALUES (%s,%s,%s);"
+    param = (name, email, picture,)
     cursor.execute(query, param)
     db.commit()
-    query = "SELECT id FROM Users WHERE email = {}".format(email)
-    user_id = cursor.execute(query)
+    query = "SELECT id FROM Users WHERE email = %s"
+    param = (email,)
+    cursor.execute(query, param)
+    user_id = cursor.fetchone()[0]
     db.close()
     return user_id
 
