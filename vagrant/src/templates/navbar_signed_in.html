@@ -1,0 +1,17 @@
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="{{url_for('showHome')}}">
+        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+        Home
+      </a>
+    </div>
+      {# Left side nav bar #}
+      <a href="{{ url_for('showMyShifts') }}" class="btn btn-primary navbar-btn">My Shifts</a>
+      <a href="{{ url_for('showOpenShifts') }}" class="btn btn-primary navbar-btn">Open Shifts</a>
+
+
+      {# Right side nav bar #}
+      <a href="{{ url_for('gdisconnect') }}" class="btn btn-danger navbar-btn navbar-right">Sign out</a>
+  </div>
+</nav>

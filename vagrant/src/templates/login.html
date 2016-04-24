@@ -1,9 +1,14 @@
 {% extends 'login_main.html' %}
 {% block content %}
-{% include "header_no_button.html" %}
-  <div class="container content">
+{% include "navbar_no_buttons.html" %}
+  <div align="middle">
+    <div class="alert alert-info alert-dismissible fade in" style="width: 500px;">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        Please log in with your Google account to access the webpage.
+    </div>
+
     <div class="row">
-      <div id="signInButton">
+      <div id="signInButton" align="middle">
         <span class="g-signin"
         data-scope="openid email"
         data-clientid="350430764388-2mqvf5kcr9h1h64jnq1n8vmufvhf7fdt.apps.googleusercontent.com"
@@ -15,8 +20,10 @@
         </span>
       </div>
     <div id="result"></div>      
-    </div>
-  </div>
+    <div class="container">
+      <strong> Our authorization system is done using Google OAuth. After logging in, you will be
+      rerouted to the "admin" page, where you can see all of the shift data.</strong>
+    </div>  </div>
 
   <!-- GOOGLE PLUS SIGN IN-->
   <script>

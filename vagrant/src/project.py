@@ -6,22 +6,19 @@
 #
 # project.py -- 
 
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
+from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, make_response
 from flask import session as login_session
-import random, string
-from oauth2client.client import flow_from_clientsecrets
-from oauth2client.client import FlowExchangeError
-import httplib2
-import json
-from flask import make_response
-import requests
+from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 from database_functions import createUser, getUserID
-
+import httplib2, requests
+import random, string, json, os
 
 app = Flask(__name__)
 
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+    open(os.path.dirname(os.path.abspath(__file__)) + '/client_secrets.json', 'r').read())['web']['client_id']
+
+DEBUG = True
 
 
 # Create anti-forgery state token
@@ -153,6 +150,9 @@ def gdisconnect():
 # Show homepage
 @app.route('/')
 def showHome():
+    if DEBUG:
+        return render_template('home.html')
+
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
@@ -162,11 +162,29 @@ def showHome():
 @app.route('/profile')
 def showProfile():
     user_id = getUserID(login_session.get('email'))
+
+# See the shifts that are currently assigned to the user logged in.
+@app.route('/myShifts')
+def showMyShifts():
+    if DEBUG:
+        return render_template('myShifts.html')
+
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
         return render_template('profile.html')
 
+# View open shifts
+# See all shifts that have been requested off by others.
+@app.route('/openShifts')
+def showOpenShifts():
+    if DEBUG:
+        return render_template('openShifts.html')
+
+    if 'username' not in login_session:
+        return render_template('publicHome.html')
+    else:
+        return render_template('openShifts.html')
 
 
 if __name__ == '__main__':

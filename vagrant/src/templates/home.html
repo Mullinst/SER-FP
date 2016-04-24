@@ -1,9 +1,16 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header_logout.html" %}
-  <div class="container content">
+{% include "navbar_signed_in.html" %}
+  <div class="container">
     <div class="row">
-      <h1>You are logged in</h1>
+      <strong>
+        After logging in, this is the page you will be rerouted to. Currently there are only two views that can
+        be accessed from this page, shown at the top-side nav bar. From these views, you will be able to access
+        these capabilities: <br><br>
+
+        <li>My Shifts: View shifts currently assigned to you, as well as select a shift from there, and put it up on the "market".</li>
+        <li>Open Shifts: View shifts currently put up on the "market" by your coworkers, as well as being able to "buy" that shift.</li>
+      </strong>
     </div>
   </div>
 {% endblock %}

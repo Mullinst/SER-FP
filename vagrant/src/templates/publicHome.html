@@ -1,9 +1,21 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
-  <div class="container content">
+{% include "navbar_not_signed_in.html" %}
+  <div class="container">
     <div class="row">
-      <h1>IF YOU CAN SEE THIS IT WORKED...</h1>
+      <h2>Welcome to the SER322 Group 18 Final Project.</h2>
+      <strong>Our project is to create an app where people can:
+      <li>View their current shifts at work.</li>
+      <li>Put an existing shift up for other employees to take.</li>
+      <li>Take over a shift put up by a coworker.</li>
+      <br>
+      Our project is built using these technologies:
+      <li>Web Framework: Python Flask</li>
+      <li>Database: PostgreSQL</li>
+      <li>Templating: Jinja2</li>
+      <li>Styling: Twitter Bootstrap</li>
+      <br>
+      To get started, press the red sign-in button on the top right.</strong>
     </div>
   </div>
 {% endblock %}

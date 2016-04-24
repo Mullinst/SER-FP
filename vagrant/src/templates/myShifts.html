@@ -1,0 +1,21 @@
+{% extends "main.html" %}
+{% include "navbar_signed_in.html" %}
+{% block content %}
+<div>
+  <h1>&nbsp;My Shifts</h1>
+
+  <table class="table table-striped table-responsive">
+    <thead>
+      <tr>
+        <th>ShiftID</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Store Location</th>
+        <th>Manager</th>
+        <th>Belonged To: (if applicable)</th>
+        <th>Put Shift On Market</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+{% endblock %}
