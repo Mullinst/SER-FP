@@ -40,9 +40,10 @@ def createUser(login_session):
 def getUserID(email):
     try:
         db, cursor = connect()
-        email = login_session['email']
-        query = "SELECT id FROM Users WHERE email = {}".format(email)
-        user_id = cursor.execute(query)
+        query = "SELECT id FROM Users WHERE email = %s"
+        param = (email,)
+        cursor.execute(query, param)
+        user_id = cursor.fetchone()[0]
         db.close()
         return user_id
     except:
