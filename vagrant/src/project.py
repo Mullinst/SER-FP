@@ -153,7 +153,10 @@ def gdisconnect():
 # Show homepage
 @app.route('/')
 def showHome():
-    return render_template('home.html')
+    if 'username' not in login_session:
+        return render_template('publicHome.html')
+    else:
+        return render_template('home.html')
 
 
 if __name__ == '__main__':
