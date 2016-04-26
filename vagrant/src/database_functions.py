@@ -86,3 +86,46 @@ def getUserID(email):
         return None
 
 
+def editUserPermissions(current_user_id, user_id, post=True,
+        accept=True, approve_requests=False,
+        delete_requests=False, edit_permissions=False):
+    """ Edit given users permissions.
+
+    Args:
+        current_user_id: User id of the user attempting
+            to edit permissions.
+        user_id: An integer referencing the user whose
+            permissions will be editted. 
+
+    Optional Args:
+        post: Boolean value referencing posting permission.
+        accept: Boolean value referencing permission to accept shifts. 
+        approve_requests: Boolean value referencing permission
+            to approve shift changes.
+        delete_requests: Boolean value referencing permission
+            to delete users posts.
+        edit_permissions: Boolean value referencing Permissions
+            to edit users permissions.
+    """
+    try:
+        db, cursor = connect()
+        # Check that current user has permission to edit permissions.
+        query = ("SELECT edit_permissions FROM permissions "
+                 "WHERE user_id = %s;")
+        cursor.execute(query, current_user_id)
+        edit_permissions = cursor.fetchone()[0]
+        if edit_permissions == True:
+            # If the current user has permission to edit permissions
+            # edit the permissions of the defined user.
+            query = ("UPDATE Permissions SET post = %s, accept = %s, "
+                     "approve_requests = %s, delete_requests = %s, "
+                     "edit_permissions = %s WHERE user_id = %s;")
+            param = (post, accept, approve_requests, delete_requests,
+                     edit_permissions, user_id,)
+            cursor.execute(query, param)
+            user_permissions = cursor.fetchall()
+            db.commit()
+        db.close()
+        return user_permissions
+    except:
+        return None

@@ -27,8 +27,9 @@ CREATE TABLE Permissions (
 	user_id integer REFERENCES Users,
 	post boolean DEFAULT true,
 	accept boolean DEFAULT true,
-	approve_request boolean DEFAULT false,
-	delete_request boolean DEFAULT false
+	approve_requests boolean DEFAULT false,
+	delete_requests boolean DEFAULT false,
+	edit_permissions boolean DEFAULT false
 ); 
 
 CREATE TABLE Stores (
