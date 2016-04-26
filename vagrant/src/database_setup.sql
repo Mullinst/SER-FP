@@ -20,7 +20,8 @@ CREATE TABLE Users (
 	id serial PRIMARY KEY,
 	name text NOT NULL,
 	email text NOT NULL,
-	picture text NOT NULL
+	picture text NOT NULL,
+	userType text NOT NULL DEFAULT "Applicant"
 );
 
 CREATE TABLE Permissions (
@@ -40,8 +41,8 @@ CREATE TABLE Stores (
 
 CREATE TABLE Shifts (
 	shiftID serial PRIMARY KEY,
-	startTime date,
-	endTime date,
+	-- startTime date,
+	-- endTime date,
 	storeID integer REFERENCES Stores
 );
 
@@ -52,3 +53,4 @@ CREATE VIEW user_count AS (
 	FROM Users);
 
 -- Define example data
+INSERT INTO Stores (location) VALUES ('Tempe, AZ');

@@ -90,7 +90,6 @@ def editUserPermissions(current_user_id, user_id, post=True,
         accept=True, approve_requests=False,
         delete_requests=False, edit_permissions=False):
     """ Edit given users permissions.
-
     Args:
         current_user_id: User id of the user attempting
             to edit permissions.
@@ -129,3 +128,12 @@ def editUserPermissions(current_user_id, user_id, post=True,
         return user_permissions
     except:
         return None
+
+
+def createShift(user_id):
+    """ Creates shift cover request """
+    return None
+
+def deleteShift(user_id, shift_id):
+    """ Deletes given shift """
+    return None
