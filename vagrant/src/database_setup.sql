@@ -52,5 +52,16 @@ CREATE VIEW user_count AS (
 	SELECT count(*) 
 	FROM Users);
 
+CREATE VIEW names AS (
+	-- List of all usernames
+	SELECT name
+	FROM Users);
+
+CREATE VIEW applicant_names As (
+	-- List the names of all applicants
+	SELECT name
+	FROM Users
+	WHERE userType = 'Applicant');
+
 -- Define example data
 INSERT INTO Stores (location) VALUES ('Tempe, AZ');
