@@ -166,29 +166,14 @@ def showHome():
         return render_template('publicHome.html')
     else:
         # If user is logged in check userType and route accordingly
-        if login_session['userType'] == 'Applicant':
-            return render_template('home.html')
+        if login_session['userType']:
+            print login_session['userType']
+            print login_session.get('userType')
+            return render_template('home.html', userType=login_session['userType'])
         else:
             # Add appropriate error handling
             return render_template('publicHome.html')
 
-# Show My Shifts
-@app.route('/profile')
-def showProfile():
-    user_id = getUserID(login_session.get('email'))
-    # Filer template
-    return render_template('publicHome.html')
-
-# See the shifts that are currently assigned to the user logged in.
-@app.route('/myShifts')
-def showMyShifts():
-    if DEBUG:
-        return render_template('myShifts.html')
-
-    if 'username' not in login_session:
-        return render_template('publicHome.html')
-    else:
-        return render_template('profile.html')
 
 # View open shifts
 # See all shifts that have been requested off by others.
@@ -201,6 +186,27 @@ def showOpenShifts():
         return render_template('publicHome.html')
     else:
         return render_template('openShifts.html')
+
+
+# See the shifts that are currently assigned to the user logged in.
+@app.route('/myShifts')
+def showMyShifts():
+    if DEBUG:
+        return render_template('myShifts.html')
+
+    if 'username' not in login_session:
+        return render_template('publicHome.html')
+    else:
+        return render_template('myShifts.html')
+
+
+@app.route('/schedule')
+def showSchedule():
+    return render_template('publicHome.html')
+
+@app.route('/admin')
+def showAdminPanel():
+    return render_template('publicHome.html')
 
 
 if __name__ == '__main__':

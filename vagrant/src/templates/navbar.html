@@ -1,0 +1,34 @@
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="{{url_for('showHome')}}">
+        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+        Home
+      </a>
+    </div>
+
+    {% if userType %}
+    
+      {# Left side nav bar - user specific button #}
+      {% if userType == 'Employee' %}
+        <a href="{{ url_for('showMyShifts') }}" class="btn btn-primary navbar-btn">My Shifts</a>
+      {% elif userType == 'Store Manager' %}
+        <a href="{{ url_for('showSchedule') }}" class="btn btn-primary navbar-btn">Schedule</a>
+      {% elif userType == 'Admin' %}
+        <a href="{{ url_for('showAdminPanel') }}" class="btn btn-primary navbar-btn">Admin Panel</a>
+      {% endif %}
+
+      {# Left side nav bar - generic #}
+      <a href="{{ url_for('showOpenShifts') }}" class="btn btn-primary navbar-btn">Open Shifts</a>
+
+      {# Right side nav bar #}
+      <a href="{{ url_for('gdisconnect') }}" class="btn btn-danger navbar-btn navbar-right">Sign out</a>
+
+    {% else %}
+      <a href="{{ url_for('showLogin') }}" class="btn btn-danger navbar-btn navbar-right">Sign in</a>
+    {% endif %}
+
+
+  </div>
+</nav>
+
