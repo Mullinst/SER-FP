@@ -9,7 +9,7 @@
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, make_response
 from flask import session as login_session
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
-from database_functions import createUser, getUserID
+from database_functions import createUser, getUserID, getUserType
 import httplib2, requests
 import random, string, json, os
 
@@ -99,11 +99,17 @@ def gconnect():
 
     data = answer.json()
 
+    # Store google data in session
     login_session['username'] = data['name']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
+
+    # Add user to database if first login
     if getUserID(login_session.get('email')) is None:
         createUser(login_session)
+
+    # Retrieve userType and add to session
+    login_session['userType'] = getUserType(getUserID(login_session.get('email')))
 
     output = ''
     output += '<h1>Welcome, '
@@ -140,6 +146,7 @@ def gdisconnect():
         del login_session['username']
         del login_session['email']
         del login_session['picture']
+        del login_session['userType']
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -154,16 +161,23 @@ def gdisconnect():
 def showHome():
     if DEBUG:
         return render_template('home.html')
-
+    # If user is not logged in render public homepage
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
-        return render_template('home.html')
+        # If user is logged in check userType and route accordingly
+        if login_session['userType'] == 'Applicant':
+            return render_template('home.html')
+        else:
+            # Add appropriate error handling
+            return render_template('publicHome.html')
 
 # Show My Shifts
 @app.route('/profile')
 def showProfile():
     user_id = getUserID(login_session.get('email'))
+    # Filer template
+    return render_template('publicHome.html')
 
 # See the shifts that are currently assigned to the user logged in.
 @app.route('/myShifts')
