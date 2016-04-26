@@ -57,11 +57,14 @@ CREATE VIEW names AS (
 	SELECT name
 	FROM Users);
 
-CREATE VIEW applicant_names As (
+CREATE VIEW applicants As (
 	-- List the names of all applicants
-	SELECT name
+	SELECT id, name
 	FROM Users
 	WHERE userType = 'Applicant');
 
 -- Define example data
 INSERT INTO Stores (location) VALUES ('Tempe, AZ');
+INSERT INTO Users (name, email, picture) VALUES ('Bob','none','none');
+INSERT INTO Users (name, email, picture) VALUES ('Sally','none','none');
+INSERT INTO Users (name, email, picture) VALUES ('Jon','none','none');

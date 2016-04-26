@@ -171,13 +171,14 @@ def deleteShift(user_id, shift_id):
     return None
 
 def getApplicants():
-    """ Returns the names of all applicants. """
+    """ Returns the id and name pairs of all applicants. """
     try:
         db, cursor = connect()
-        query = "SELECT * FROM applicant_names;"
+        query = "SELECT * FROM applicants;"
         cursor.execute(query)
         names = cursor.fetchall()
         db.close()
         return names
     except:
         return None
+

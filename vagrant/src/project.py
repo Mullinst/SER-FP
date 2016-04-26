@@ -9,7 +9,7 @@
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, make_response
 from flask import session as login_session
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
-from database_functions import createUser, getUserID, getUserType, getApplicants
+from database_functions import createUser, getUserID, getUserType, changeUserType, getApplicants
 import httplib2, requests
 import random, string, json, os
 
@@ -205,16 +205,16 @@ def showMyShifts():
 def showSchedule():
     return render_template('publicHome.html')
 
-@app.route('/admin')
+@app.route('/admin', methods=['GET', 'POST'])
 def showAdminPanel():
     if login_session['userType'] == 'Admin':
-        names = getApplicants()
+        applicants = getApplicants()
         if request.method == 'POST':
             if request.form['name'] and request.form['type']:
                 changeUserType(request.form['name'], request.form['type'])
                 flash('Item Successfully Edited', 'success')
-                return redirect(url_for('showAdminPanel', userType=login_session['userType'], names=names))
-        return render_template('admin_panel.html', userType=login_session['userType'], names=names)
+                return redirect(url_for('showAdminPanel', userType=login_session['userType'], applicants=applicants))
+        return render_template('admin_panel.html', userType=login_session['userType'], applicants=applicants)
     else:
         return render_template('publicHome')
 

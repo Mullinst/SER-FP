@@ -15,10 +15,8 @@
         <div class="form-group">
         <label for="name">Applicants</label>
         <select name="name" class="form-control" id="name" >
-          {% for name in names %}
-            {% for string in name %}
-            <option value="{{string}}">{{string}}</option>
-            {% endfor %}
+          {% for applicant in applicants %}
+              <option value="{{applicant[0]}}">{{applicant[1]}}</option>
           {% endfor %} 
         </select>
       </div>
