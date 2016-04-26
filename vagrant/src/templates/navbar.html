@@ -16,6 +16,10 @@
         <a href="{{ url_for('showSchedule') }}" class="btn btn-primary navbar-btn">Schedule</a>
       {% elif userType == 'Admin' %}
         <a href="{{ url_for('showAdminPanel') }}" class="btn btn-primary navbar-btn">Admin Panel</a>
+      {% elif userType == 'debug' %}
+        <a href="{{ url_for('showMyShifts') }}" class="btn btn-primary navbar-btn">My Shifts</a>
+        <a href="{{ url_for('showSchedule') }}" class="btn btn-primary navbar-btn">Schedule</a>
+        <a href="{{ url_for('showAdminPanel') }}" class="btn btn-primary navbar-btn">Admin Panel</a>
       {% endif %}
 
       {# Left side nav bar - generic #}

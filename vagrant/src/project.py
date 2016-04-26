@@ -20,7 +20,7 @@ CLIENT_ID = json.loads(
     open(os.path.dirname(os.path.abspath(__file__)) + '/client_secrets.json', 'r').read())['web']['client_id']
 
 # Set Debug to true for alternative routing paths.
-DEBUG = False
+DEBUG = True
 
 
 # Create anti-forgery state token
@@ -160,15 +160,14 @@ def gdisconnect():
 @app.route('/')
 def showHome():
     if DEBUG:
-        return render_template('home.html')
+        return render_template('home.html', userType='debug')
+    
     # If user is not logged in render public homepage
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
         # If user is logged in check userType and route accordingly
         if login_session['userType']:
-            print login_session['userType']
-            print login_session.get('userType')
             return render_template('home.html', userType=login_session['userType'])
         else:
             # Add appropriate error handling
@@ -180,24 +179,24 @@ def showHome():
 @app.route('/openShifts')
 def showOpenShifts():
     if DEBUG:
-        return render_template('openShifts.html')
+        return render_template('openShifts.html', userType='debug')
 
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
-        return render_template('openShifts.html')
+        return render_template('openShifts.html', userType=login_session['userType'])
 
 
 # See the shifts that are currently assigned to the user logged in.
 @app.route('/myShifts')
 def showMyShifts():
     if DEBUG:
-        return render_template('myShifts.html')
+        return render_template('myShifts.html', userType='debug')
 
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
-        return render_template('myShifts.html')
+        return render_template('myShifts.html', userType=login_session['userType'])
 
 
 @app.route('/schedule')
