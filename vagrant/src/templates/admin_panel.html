@@ -1,0 +1,43 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "navbar.html" %}
+{% include "flash.html" %}
+
+  <div class="container">
+    <div class="row">
+      <strong>
+        <h1>Admin Panel</h1>
+      </strong>
+    </div>
+    <div class="row">
+      <form class="col-md-5" action="{{url_for('showAdminPanel', userType=userType, names=names)}}" method="post">
+
+        <div class="form-group">
+        <label for="name">Applicants</label>
+        <select name="name" class="form-control" id="name" >
+          {% for name in names %}
+            {% for string in name %}
+            <option value="{{string}}">{{string}}</option>
+            {% endfor %}
+          {% endfor %} 
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="type">User Type</label>
+        <select name="type" class="form-control" id="type" >
+          <option value="Applicant">Applicant</option>
+          <option value="Employee">Employee</option>
+          <option value="Store Manager">Store Manager</option>
+          <option value="Admin">Admin</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+      </div>
+    </form>
+    </div>
+  </div>
+{% endblock %}
