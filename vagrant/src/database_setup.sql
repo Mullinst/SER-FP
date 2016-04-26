@@ -21,7 +21,7 @@ CREATE TABLE Users (
 	name text NOT NULL,
 	email text NOT NULL,
 	picture text NOT NULL,
-	userType text NOT NULL DEFAULT "Applicant"
+	userType text NOT NULL DEFAULT 'Applicant'
 );
 
 CREATE TABLE Permissions (
