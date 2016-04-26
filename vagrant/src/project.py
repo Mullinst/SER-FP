@@ -9,7 +9,7 @@
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, make_response
 from flask import session as login_session
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
-from database_functions import createUser, getUserID, getUserType
+from database_functions import createUser, getUserID, getUserType, getApplicants
 import httplib2, requests
 import random, string, json, os
 
@@ -20,7 +20,7 @@ CLIENT_ID = json.loads(
     open(os.path.dirname(os.path.abspath(__file__)) + '/client_secrets.json', 'r').read())['web']['client_id']
 
 # Set Debug to true for alternative routing paths.
-DEBUG = True
+DEBUG = False
 
 
 # Create anti-forgery state token
@@ -149,11 +149,13 @@ def gdisconnect():
         del login_session['userType']
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
-        return response
+        flash('Successfully disconnected.', 'success')
+        return redirect(url_for('showHome'))
     else:
         response = make_response(json.dumps('Failed to revoke token for given user.', 400))
         response.headers['Content-Type'] = 'application/json'
-        return response
+        flash('Failed to revoke token for given user.', 'error')
+        return redirect(url_for('showHome'))
 
 
 # Show homepage
@@ -205,7 +207,16 @@ def showSchedule():
 
 @app.route('/admin')
 def showAdminPanel():
-    return render_template('publicHome.html')
+    if login_session['userType'] == 'Admin':
+        names = getApplicants()
+        if request.method == 'POST':
+            if request.form['name'] and request.form['type']:
+                changeUserType(request.form['name'], request.form['type'])
+                flash('Item Successfully Edited', 'success')
+                return redirect(url_for('showAdminPanel', userType=login_session['userType'], names=names))
+        return render_template('admin_panel.html', userType=login_session['userType'], names=names)
+    else:
+        return render_template('publicHome')
 
 
 if __name__ == '__main__':
