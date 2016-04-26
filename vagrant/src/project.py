@@ -15,10 +15,12 @@ import random, string, json, os
 
 app = Flask(__name__)
 
+# Loads client ID for use in logging in with google.
 CLIENT_ID = json.loads(
     open(os.path.dirname(os.path.abspath(__file__)) + '/client_secrets.json', 'r').read())['web']['client_id']
 
-DEBUG = True
+# Set Debug to true for alternative routing paths.
+DEBUG = False
 
 
 # Create anti-forgery state token
