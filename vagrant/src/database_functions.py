@@ -77,14 +77,25 @@ def getUserID(email):
     try:
         db, cursor = connect()
         query = "SELECT id FROM Users WHERE email = %s;"
-        param = (email,)
-        cursor.execute(query, param)
+        cursor.execute(query, email)
         user_id = cursor.fetchone()[0]
         db.close()
         return user_id
     except:
         return None
 
+
+def getUserType(user_id):
+    """ Returns userType for given user. """
+    try:
+        db, cursor = connect()
+        query = "SELECT userType FROM Users WHERE id = %s;"
+        cursor.execute(query, user_id)
+        userType = cursor.fetchone()[0]
+        db.close()
+        return userType
+    except:
+        return None
 
 def editUserPermissions(current_user_id, user_id, post=True,
         accept=True, approve_requests=False,
