@@ -46,10 +46,11 @@ def deleteUser(user_id):
         db, cursor = connect()
         # Delete user permissions
         query = "DELETE FROM Permissions WHERE user_id = %s;"
-        cursor.execute(query, user_id)
+        param = (user_id,)
+        cursor.execute(query, param)
         # Delete user from Users table
         query = "DELETE FROM Users WHERE id = %s RETURNING *;"
-        cursor.execute(query, user_id)
+        cursor.execute(query, param)
         user = cursor.fetchall()
         db.commit()
         db.close()
@@ -77,7 +78,8 @@ def getUserID(email):
     try:
         db, cursor = connect()
         query = "SELECT id FROM Users WHERE email = %s;"
-        cursor.execute(query, email)
+        param = (email,)
+        cursor.execute(query, param)
         user_id = cursor.fetchone()[0]
         db.close()
         return user_id
@@ -90,12 +92,14 @@ def getUserType(user_id):
     try:
         db, cursor = connect()
         query = "SELECT userType FROM Users WHERE id = %s;"
-        cursor.execute(query, user_id)
+        param = (user_id,)
+        cursor.execute(query, param)
         userType = cursor.fetchone()[0]
         db.close()
         return userType
     except:
         return None
+
 
 def editUserPermissions(current_user_id, user_id, post=True,
         accept=True, approve_requests=False,
@@ -122,7 +126,8 @@ def editUserPermissions(current_user_id, user_id, post=True,
         # Check that current user has permission to edit permissions.
         query = ("SELECT edit_permissions FROM permissions "
                  "WHERE user_id = %s;")
-        cursor.execute(query, current_user_id)
+        param = (current_user_id,)
+        cursor.execute(query, param)
         edit_permissions = cursor.fetchone()[0]
         if edit_permissions == True:
             # If the current user has permission to edit permissions
