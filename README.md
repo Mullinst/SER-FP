@@ -40,6 +40,7 @@ Useful Documentation
 * [Flask](http://flask.pocoo.org/docs/0.10/quickstart/)
 * [jinja2](http://jinja.pocoo.org/docs/dev/)
 * [Bootstrap](http://getbootstrap.com/)
+* [Postgresql](http://www.postgresql.org/docs/9.3/static/index.html)
 * [MDN](https://developer.mozilla.org/en-US/)
 
 
