@@ -101,6 +101,22 @@ def getUserType(user_id):
         return None
 
 
+def changeUserType(user_id, userType):
+    """ Change userType of given user. """
+    try:
+        if userType == 'Employee' or userType == 'Store Manager' or userType == 'Admin':
+            db, cursor = connect()
+            query = "UPDATE Users SET userType = %s WHERE id = %s"
+            param = (userType, user_id,)
+            cursor.execute(query, param)
+            db.commit()
+            db.close()
+            return userType
+        else:
+            return None
+    except:
+        return None
+
 def editUserPermissions(current_user_id, user_id, post=True,
         accept=True, approve_requests=False,
         delete_requests=False, edit_permissions=False):
@@ -153,3 +169,15 @@ def createShift(user_id):
 def deleteShift(user_id, shift_id):
     """ Deletes given shift """
     return None
+
+def getApplicants():
+    """ Returns the names of all applicants. """
+    try:
+        db, cursor = connect()
+        query = "SELECT * FROM applicant_names;"
+        cursor.execute(query)
+        names = cursor.fetchall()
+        db.close()
+        return names
+    except:
+        return None
