@@ -46,6 +46,9 @@ CREATE TABLE Shifts (
 	storeID integer REFERENCES Stores
 );
 
+-- Alter
+ALTER TABLE IF EXISTS Users ADD storeID integer REFERENCES Stores;
+
 -- Define views
 CREATE VIEW user_count AS (
 	-- Count of players currently registerd
