@@ -182,3 +182,16 @@ def getApplicants():
     except:
         return None
 
+def getShifts(email):
+    try:
+        db, cursor = connect()
+        query = ("SELECT * FROM Users, Shifts"
+                "WHERE Users.email = %s"
+                "AND Users.id = Shifts.assigneeID;")
+        params = (email)
+        cursor.execute(query, params)
+        shifts = cursor.fetchall()
+        db.close()
+        return shifts
+    except:
+        return None

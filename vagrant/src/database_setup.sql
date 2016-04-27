@@ -41,6 +41,7 @@ CREATE TABLE Stores (
 
 CREATE TABLE Shifts (
 	shiftID serial PRIMARY KEY,
+	assigneeID integer REFERENCES Users (id),
 	-- startTime date,
 	-- endTime date,
 	storeID integer REFERENCES Stores

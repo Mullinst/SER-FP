@@ -4,12 +4,12 @@
 # Licensed under MIT
 # (https://github.com/Mullinst/SER-FP/blob/master/LICENSE)
 #
-# project.py -- 
+# project.py --
 
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, make_response
 from flask import session as login_session
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
-from database_functions import createUser, getUserID, getUserType, changeUserType, getApplicants
+from database_functions import *
 import httplib2, requests
 import random, string, json, os
 
@@ -20,7 +20,7 @@ CLIENT_ID = json.loads(
     open(os.path.dirname(os.path.abspath(__file__)) + '/client_secrets.json', 'r').read())['web']['client_id']
 
 # Set Debug to true for alternative routing paths.
-DEBUG = False
+DEBUG = True
 
 
 # Create anti-forgery state token
@@ -41,7 +41,7 @@ def gconnect():
         return response
     # Obtain authorization code
     code = request.data
-    
+
     try:
         # Upgrade the authorization code into a credentials object
         oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
@@ -120,7 +120,7 @@ def gconnect():
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
     print "done!"
-    return output  
+    return output
 
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
@@ -128,7 +128,7 @@ def gconnect():
 def gdisconnect():
     access_token = login_session['access_token']
     print 'In gdisconnect access token is %s', access_token
-    print 'User name is: ' 
+    print 'User name is: '
     print login_session['username']
     if access_token is None:
         print 'Access Token is None'
@@ -141,7 +141,7 @@ def gdisconnect():
     print 'result is '
     print result
     if result['status'] == '200':
-        del login_session['access_token'] 
+        del login_session['access_token']
         del login_session['gplus_id']
         del login_session['username']
         del login_session['email']
@@ -163,7 +163,7 @@ def gdisconnect():
 def showHome():
     if DEBUG:
         return render_template('home.html', userType='debug')
-    
+
     # If user is not logged in render public homepage
     if 'username' not in login_session:
         return render_template('publicHome.html')
@@ -198,15 +198,20 @@ def showMyShifts():
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
-        return render_template('myShifts.html', userType=login_session['userType'])
+        return render_template('myShifts.html', userType=login_session['userType'], shifts=getShifts(login_session['email']))
 
 
 @app.route('/schedule')
 def showSchedule():
     return render_template('publicHome.html')
 
+
 @app.route('/admin', methods=['GET', 'POST'])
 def showAdminPanel():
+    if DEBUG:
+        applicants = [[1, 'Sally'], [2, 'Joe']]
+        return render_template('admin_panel.html', userType='debug', applicants=applicants)
+
     if login_session['userType'] == 'Admin':
         applicants = getApplicants()
         if request.method == 'POST':
@@ -216,7 +221,7 @@ def showAdminPanel():
                 return redirect(url_for('showAdminPanel', userType=login_session['userType'], applicants=applicants))
         return render_template('admin_panel.html', userType=login_session['userType'], applicants=applicants)
     else:
-        return render_template('publicHome')
+        return render_template('publicHome.html')
 
 
 if __name__ == '__main__':
