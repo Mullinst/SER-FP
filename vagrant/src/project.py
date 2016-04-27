@@ -20,7 +20,7 @@ CLIENT_ID = json.loads(
     open(os.path.dirname(os.path.abspath(__file__)) + '/client_secrets.json', 'r').read())['web']['client_id']
 
 # Set Debug to true for alternative routing paths.
-DEBUG = True
+DEBUG = False
 
 
 # Create anti-forgery state token
@@ -210,16 +210,20 @@ def showSchedule():
 def showAdminPanel():
     if DEBUG:
         applicants = [[1, 'Sally'], [2, 'Joe']]
-        return render_template('admin_panel.html', userType='debug', applicants=applicants)
+        users = [[1, 'Sally'], [2, 'Joe']]
+        return render_template('admin_panel.html', userType='debug', applicants=applicants, users=users)
 
     if login_session['userType'] == 'Admin':
         applicants = getApplicants()
+        users = getUsers()
+        current_user_id = getUserID(login_session.get('email'))
+        print current_user_id
         if request.method == 'POST':
-            if request.form['name'] and request.form['type']:
-                changeUserType(request.form['name'], request.form['type'])
-                flash('Item Successfully Edited', 'success')
-                return redirect(url_for('showAdminPanel', userType=login_session['userType'], applicants=applicants))
-        return render_template('admin_panel.html', userType=login_session['userType'], applicants=applicants)
+            changeUserType(request.form['name'], request.form['type'])
+            editUserPermissions(current_user_id, request.form['name'], request.form['post'], request.form['accept'], request.form['approve'], request.form['delete'])
+            flash('Changes Successfully Made', 'success')
+            return redirect(url_for('showAdminPanel', userType=login_session['userType'], applicants=applicants, users=users))
+        return render_template('admin_panel.html', userType=login_session['userType'], applicants=applicants, users=users)
     else:
         return render_template('publicHome.html')
 

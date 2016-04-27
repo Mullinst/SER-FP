@@ -140,24 +140,27 @@ def editUserPermissions(current_user_id, user_id, post=True,
     try:
         db, cursor = connect()
         # Check that current user has permission to edit permissions.
-        query = ("SELECT edit_permissions FROM permissions "
+        query = ("SELECT edit_permissions FROM Permissions "
                  "WHERE user_id = %s;")
         param = (current_user_id,)
         cursor.execute(query, param)
-        edit_permissions = cursor.fetchone()[0]
-        if edit_permissions == True:
+        user_edit_permissions = cursor.fetchone()[0]
+        if user_edit_permissions == True:
             # If the current user has permission to edit permissions
             # edit the permissions of the defined user.
-            query = ("UPDATE Permissions SET post = %s, accept = %s, "
-                     "approve_requests = %s, delete_requests = %s, "
+            if current_user_id == user_id:
+                # If the current user has permission to edit override defualt.
+                edit_permissions = True
+            query = ("UPDATE Permissions SET post = %s, accept = %s,"
+                     "approve_requests = %s, delete_requests = %s,"
                      "edit_permissions = %s WHERE user_id = %s;")
             param = (post, accept, approve_requests, delete_requests,
-                     edit_permissions, user_id,)
+                     edit_permissions, int(user_id),)
+            print param
             cursor.execute(query, param)
-            user_permissions = cursor.fetchall()
             db.commit()
-        db.close()
-        return user_permissions
+            db.close()
+            return True
     except:
         return None
 
@@ -176,11 +179,25 @@ def getApplicants():
         db, cursor = connect()
         query = "SELECT * FROM applicants;"
         cursor.execute(query)
-        names = cursor.fetchall()
+        applicants = cursor.fetchall()
         db.close()
-        return names
+        return applicants
     except:
         return None
+
+
+def getUsers():
+    """ Returns id and name pairs for all users. """
+    try:
+        db, cursor = connect()
+        query = "SELECT id, name FROM Users;"
+        cursor.execute(query)
+        users = cursor.fetchall()
+        db.close()
+        return users
+    except:
+        return None
+
 
 def getShifts(email):
     try:

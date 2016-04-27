@@ -4,18 +4,40 @@
 <div>
   <h1>&nbsp;My Shifts</h1>
 
-  <table class="table table-striped table-responsive">
-    <thead>
-      <tr>
-        <th>ShiftID</th>
-        <th>Start Time</th>
-        <th>End Time</th>
-        <th>Store Location</th>
-        <th>Manager</th>
-        <th>Belonged To: (if applicable)</th>
-        <th>Put Shift On Market</th>
-      </tr>
-    </thead>
-  </table>
+
+
+  <div class="container">
+    <div class="row">
+      <form class="col-md-5" action="{{url_for('showAdminPanel', userType=userType, names=names)}}" method="post">
+
+        <div class="form-group">
+          <label for="startTime">Start Time</label>
+          <input name="startTime" type="range" id="startTime" min="0" max="60" step="15">
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-default">Reset</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="row">
+      <table class="table table-striped table-responsive">
+        <thead>
+          <tr>
+            <th>ShiftID</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Store Location</th>
+            <th>Manager</th>
+            <th>Belonged To: (if applicable)</th>
+            <th>Put Shift On Market</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+
 </div>
 {% endblock %}

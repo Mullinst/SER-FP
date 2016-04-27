@@ -74,3 +74,6 @@ INSERT INTO Stores (location) VALUES ('Unassigned');
 INSERT INTO Users (name, email, picture) VALUES ('Bob','none','none');
 INSERT INTO Users (name, email, picture) VALUES ('Sally','none','none');
 INSERT INTO Users (name, email, picture) VALUES ('Jon','none','none');
+INSERT INTO Permissions (user_id) VALUES (1);
+INSERT INTO Permissions (user_id) VALUES (2);
+INSERT INTO Permissions (user_id) VALUES (3);
