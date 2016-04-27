@@ -47,8 +47,8 @@ CREATE TABLE Shifts (
 	storeID integer REFERENCES Stores
 );
 
--- Alter
-ALTER TABLE IF EXISTS Users ADD storeID integer REFERENCES Stores;
+-- Alter Users table to add storeID column
+ALTER TABLE IF EXISTS Users ADD storeID integer REFERENCES Stores DEFAULT 1;
 
 -- Define views
 CREATE VIEW user_count AS (
@@ -67,8 +67,10 @@ CREATE VIEW applicants As (
 	FROM Users
 	WHERE userType = 'Applicant');
 
+-- Define default store entry
+INSERT INTO Stores (location) VALUES ('Unassigned');
+
 -- Define example data
-INSERT INTO Stores (location) VALUES ('Tempe, AZ');
 INSERT INTO Users (name, email, picture) VALUES ('Bob','none','none');
 INSERT INTO Users (name, email, picture) VALUES ('Sally','none','none');
 INSERT INTO Users (name, email, picture) VALUES ('Jon','none','none');
