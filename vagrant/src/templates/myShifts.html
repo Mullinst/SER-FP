@@ -156,15 +156,15 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">   
         <div class="modal-body">
-          <h1>Are you sure you want to delete?</h1>
+          <h3>Are you sure you want to delete shift?</h3>
         </div>
         <div class="modal-footer">
           <form class="col-md-12" action="{{url_for('showMyShifts', userType=userType)}}" method="post">
-            <input name="shiftID" type="text" value="filler" hidden="True"/>
+            <input name="shiftID" type="text" value="" id="deleteID" hidden="True"/>
             <div class="row">
               <div class="form-group">
                 <button type="submit" name="delete" class="btn btn-danger">Yes</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">No</button>
+                <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" aria-label="Close">No</button>
               </div>
             </div>
           </form>
@@ -203,7 +203,7 @@
           </button>
           <ul class="dropdown-menu">
             <li><a href="#" data-toggle="modal" data-target="#editModal">edit</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#deleteModal">Delete</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#deleteModal"  class="delete_link" shiftID="{{ shift[0] }}">Delete</a></li>
           </ul>
         </div>
       {% else %}
@@ -223,11 +223,18 @@
           </button>
           <ul class="dropdown-menu">
             <li><a href="#" data-toggle="modal" data-target="#editModal">edit</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#deleteModal">Delete</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#deleteModal" class="delete_link" shiftID="{{ shift[0] }}">Delete</a></li>
           </ul>
         </div>
       {% endif %}
     {% endfor %}
   </div>
-
+<script>
+  $(document).on('click', '.delete_link', function (event) {
+    // Get shift id of the element that was pressed
+    var shiftID = $(event.target).attr('shiftID');
+    console.log(shiftID);
+    $("#deleteID").attr("value", shiftID);
+  })
+</script>
 {% endblock %}
