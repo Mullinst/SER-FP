@@ -41,9 +41,11 @@ CREATE TABLE Stores (
 
 CREATE TABLE Shifts (
 	shiftID serial PRIMARY KEY,
-	assigneeID integer REFERENCES Users (id),
-	-- startTime date,
-	-- endTime date,
+	requestor_user_ID integer REFERENCES Users (id),
+	acceptor_user_ID integer REFERENCES Users (id),
+	shift_number integer,
+	shift_day date,
+	isUrgent boolean,
 	storeID integer REFERENCES Stores
 );
 
