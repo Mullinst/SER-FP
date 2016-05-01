@@ -44,23 +44,23 @@ Required Libraries and Dependencies
 Installation
 ------------------
 
-To install and access the database use the following steps:
-1. Download project repository.
-2. In terminal (or equivalent command line application), navigate to the repository directory.
-3. Navigate to the vagrant directory.
-4. Execute the following commands in order:
-	* `vagrant up` (powers on the virtual machine)
-	* `vagrant ssh` (logs into the virtual machine)
-	* `cd /vagrant` to change directory to the synced folders.
-	* `cd src/` to change directory to src.
-	* `psql` to access postgresql.
-	* `\i filername.sql` to create filername database.
-	* `\q` to exit database.
-	* `python project.py` to run project.
-	* Open browser to `http://localhost:8000`
-
+To install and access the database use the following steps:<br>
+1. Download project repository.<br>
+2. In terminal (or equivalent command line application), navigate to the repository directory.<br>
+3. Navigate to the vagrant directory.<br>
+4. Execute the following commands in order:<br>
+	* `vagrant up` (powers on the virtual machine)<br>
+	* `vagrant ssh` (logs into the virtual machine)<br>
+	* `cd /vagrant` to change directory to the synced folders.<br>
+	* `cd src/` to change directory to src.<br>
+	* `psql` to access postgresql.<br>
+	* `\i filername.sql` to create filername database.<br>
+	* `\q` to exit database.<br>
+	* `python project.py` to run project.<br>
+	* Open browser to `http://localhost:8000`<br>
+<br><br>
 You should now be able to access the database and select and view queries.
-
+<br><br>
 For troubleshooting any of the above steps please see the 'Troubleshooting' section below.
 
 
