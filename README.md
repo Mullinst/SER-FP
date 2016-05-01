@@ -6,16 +6,16 @@ Thomas Norby, Troy Mullins, Robert King, Jacky Liang
 Table of Contents
 -----------------------------------
 
-Introduction
-Contribution
-Required Libraries and Dependencies
-Installation
-Terminating executables 
-Useful Documentation
-Useful Git commands
-Commit Message Syntax
-Troubleshooting
-Copyright and license
+•Introduction
+•Contribution
+•Required Libraries and Dependencies
+•Installation
+•Terminating executables 
+•Useful Documentation
+•Useful Git commands
+•Commit Message Syntax
+•Troubleshooting
+•Copyright and license
 
 
 Introduction
