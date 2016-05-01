@@ -258,3 +258,55 @@ def getRequestedShiftChanges(user_id):
         return shifts
     except:
         return None
+
+
+def getCurrentStoreNonUrgentShifts(storeID):
+    """ Returns all the shifts for a given store. """
+    try:
+        db, cursor = connect()
+        query = "SELECT * FROM Shifts WHERE storeID = %s AND status = 'Active' AND isUrgent = false ORDER BY shift_day;"
+        params = (storeID,)
+        cursor.execute(query, params)
+        shifts = cursor.fetchall()
+        db.close()
+        return shifts
+    except:
+        return None
+
+
+def getCurrentStoreUrgentShifts(storeID):
+    """ Returns all the shifts for a given store. """
+    try:
+        db, cursor = connect()
+        query = "SELECT * FROM Shifts WHERE storeID = %s AND status = 'Active' AND isUrgent = false ORDER BY shift_day;"
+        params = (storeID,)
+        cursor.execute(query, params)
+        shifts = cursor.fetchall()
+        db.close()
+        return shifts
+    except:
+        return None
+
+
+def getStoreManager(storeID):
+    """ Returns the name of the store manager for a given store. """
+    try:
+        db, cursor = connect()
+        query = "SELECT storeManagerID FROM Stores WHERE storeID = %s;"
+        params = (storeID,)
+        cursor.execute(query, params)
+        storeManagerID = cursor.fetchone()[0]
+        query = "SELECT name FROM Users WHERE id = %s;"
+        params = (storeManagerID,)
+        cursor.execute(query, params)
+        name = cursor.fetchone()[0]
+        db.close()
+        return name
+    except:
+        return None
+
+user_info = getUserInfo(4)
+print user_info
+storeID = user_info[0][-1]
+print storeID
+print getStoreManager(storeID)
