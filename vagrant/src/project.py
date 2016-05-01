@@ -204,14 +204,12 @@ def showMyShifts():
             user_id = getUserID(login_session.get('email'))
             print user_id
             if 'urgent' not in request.form:
-                print request.form['date']
-                print request.form['time']
-                print createShift(user_id, request.form['time'], request.form['date'], False)
+                createShift(user_id, request.form['time'], request.form['date'], False)
             else:
-                print createShift(user_id, request.form['time'], request.form['date'], True)
+                createShift(user_id, request.form['time'], request.form['date'], True)
             flash('Successfully Added Shift', 'success')
             return redirect(url_for('showMyShifts', userType=login_session['userType']))
-        return render_template('myShifts.html', userType=login_session['userType'])
+        return render_template('myShifts.html', userType=login_session['userType'], created_shifts=created_shifts)
 
 
 
