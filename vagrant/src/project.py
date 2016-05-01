@@ -198,6 +198,8 @@ def showMyShifts():
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
+        created_shifts = getRequestedShiftChanges(getUserID(login_session.get('email')))
+        print created_shifts
         if request.method == 'POST':
             user_id = getUserID(login_session.get('email'))
             print user_id
