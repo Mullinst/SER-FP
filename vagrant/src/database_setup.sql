@@ -42,8 +42,8 @@ CREATE TABLE Stores (
 
 CREATE TABLE Shifts (
 	shiftID serial PRIMARY KEY,
-	requestor_user_ID integer REFERENCES Users (id),
-	acceptor_user_ID integer REFERENCES Users (id),
+	requestor_ID integer REFERENCES Users (id),
+	acceptor_ID integer REFERENCES Users (id),
 	shift_number integer,
 	shift_day date,
 	isUrgent boolean,
