@@ -174,7 +174,7 @@ def createShift(user_id, shift_number, date, is_urgent=False):
         print param
         cursor.execute(query, param)
         storeID = cursor.fetchone()[0]
-        query = "INSERT INTO Shifts (requestor_user_ID, shift_number, shift_day, isUrgent, storeID) VALUES (%s,%s,%s,%s,%s);"
+        query = "INSERT INTO Shifts (requestor_ID, shift_number, shift_day, isUrgent, storeID) VALUES (%s,%s,%s,%s,%s);"
         param = (user_id, int(shift_number), str(date), is_urgent, storeID,)
         print param
         cursor.execute(query, param)
@@ -214,13 +214,12 @@ def getUsers():
         return None
 
 
-def getShifts(email):
+def getRequestedShiftChanges(user_id):
+    """ Returns all shift change requests created by the user. """
     try:
         db, cursor = connect()
-        query = ("SELECT * FROM Users, Shifts"
-                "WHERE Users.email = %s"
-                "AND Users.id = Shifts.assigneeID;")
-        params = (email)
+        query = "SELECT * FROM Shifts WHERE requestor_id = %s;"
+        params = (user_id,)
         cursor.execute(query, params)
         shifts = cursor.fetchall()
         db.close()
