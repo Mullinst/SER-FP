@@ -165,9 +165,15 @@ def editUserPermissions(current_user_id, user_id, post=True,
         return None
 
 
-def createShift(user_id):
+def createShift(user_id, shift_number, date, is_urgent=False):
     """ Creates shift cover request """
-    return None
+    try:
+        print user_id
+        print shift_number
+        print date
+        print is_urgent
+    except:
+        return None
 
 def deleteShift(user_id, shift_id):
     """ Deletes given shift """
