@@ -171,12 +171,12 @@ def createShift(user_id, shift_number, date, is_urgent=False):
         db, cursor = connect()
         query = "SELECT storeID FROM Users WHERE id = %s;"
         param = (user_id,)
-        print "user id is: " + param
-        cusor.execute(query, param)
+        print param
+        cursor.execute(query, param)
         storeID = cursor.fetchone()[0]
         query = "INSERT INTO Shifts (requestor_user_ID, shift_number, shift_day, isUrgent, storeID) VALUES (%s,%s,%s,%s,%s);"
-        param = (user_id, shift_number, date, is_urgent, storeID,)
-        print "Param: " + param
+        param = (user_id, int(shift_number), str(date), is_urgent, storeID,)
+        print param
         cursor.execute(query, param)
         db.commit()
         db.close()
