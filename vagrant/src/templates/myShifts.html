@@ -152,7 +152,26 @@
   </div>
 
   <!-- deleteModal -->
-
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">   
+        <div class="modal-body">
+          <h1>Are you sure you want to delete?</h1>
+        </div>
+        <div class="modal-footer">
+          <form class="col-md-12" action="{{url_for('showMyShifts', userType=userType)}}" method="post">
+            <input name="shiftID" type="text" value="filler" hidden="True"/>
+            <div class="row">
+              <div class="form-group">
+                <button type="submit" name="delete" class="btn btn-danger">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">No</button>
+              </div>
+            </div>
+          </form>
+        </div>    
+      </div>
+    </div>
+  </div>
 
   <!-- Page Content -->
   <div class="container">
