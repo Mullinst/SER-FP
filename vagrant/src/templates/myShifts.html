@@ -14,22 +14,53 @@
         </div>
         
         <div class="modal-body">
+          <form class="col-md-12" action="{{url_for('showMyShifts', userType=userType)}}" method="post">
 
-          <form class="col-md-12" action="{{url_for('showAdminPanel', userType=userType)}}" method="post">
-
-            
-              <div class="form-group">
-                <button type="submit" name="submit" class="btn btn-primary">Create Shift</button>
-                <button type="reset" class="btn btn-default">Reset</button>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="time">Shift</label>
+                <select name="time" class="form-control" id="time" >
+                  <option value="1">8:00am - 4:00pm</option>
+                  <option value="2">4:00pm - 12:00am</option>
+                  <option value="3">12:00am - 8:00am</option>
+                </select>
               </div>
-            
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="date">Date</label>
+                <br>
+                <input name="date" type="text" id="datepicker">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="urgent">Urgent</label>
+                <input name="urgent" type="checkbox" id="urgent">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <button type="submit" name="submit" class="btn btn-primary pull-right" id="myShiftSubmit">Create Shift</button>
+                <button type="reset" class="btn btn-default pull-right ">Reset</button>
+              </div>
+            </div>
           </form>
-
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
         </div>
-          
-        <div class="modal-footer"></div>
-
-
       </div>
     </div>
   </div>
@@ -60,5 +91,6 @@
   </div>
 
 </div>
+
 {% endblock %}
 

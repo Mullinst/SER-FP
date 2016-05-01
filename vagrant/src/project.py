@@ -198,7 +198,7 @@ def showMyShifts():
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
-        return render_template('myShifts.html', userType=login_session['userType'], shifts=getShifts(login_session['email']))
+        return render_template('myShifts.html', userType=login_session['userType'])
 
 
 @app.route('/schedule')
