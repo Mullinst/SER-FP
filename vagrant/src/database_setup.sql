@@ -22,6 +22,7 @@ CREATE TABLE Users (
 	email text NOT NULL,
 	picture text NOT NULL,
 	userType text NOT NULL DEFAULT 'Applicant'
+	-- storeID column added after tables created
 );
 
 CREATE TABLE Permissions (
