@@ -212,6 +212,16 @@ def showMyShifts():
                     flash('Error: Failed to edit shift.','error')
                 return redirect(url_for('showMyShifts', userType=login_session['userType']))
             user_id = getUserID(login_session.get('email'))
+            if 'delete' in request.form:
+                print request.form['shiftID']
+                #result = deleteShift(request.form['shiftID'])
+                result = bool(request.form['shiftID'])
+                if result == True:
+                    flash('Successfully deleted shift!','success')
+                else:
+                    flash('Error: Failed to delete shift.','error')
+                return redirect(url_for('showMyShifts', userType=login_session['userType']))
+
             if 'urgent' not in request.form:
                 createShift(user_id, request.form['time'], request.form['date'], False)
             else:
