@@ -1,5 +1,74 @@
 {% extends "main.html" %}
 {% include "navbar.html" %}
 {% block content %}
+	<div class="container content-fluid">
+		<div class="row">
+			<h1>Store Manager: {{manager}}</h1>
+		</div>
+	</div>
 
+	{% include "flash.html" %}
+
+	<div class="row">
+		<h2>Urgent Shift Requests: </h2>
+	</div>
+	<!-- Urgent Shift -->
+	{% for shift in urgentShifts %}
+      	{% if shift == urgentShifts[4] %}
+          </div>
+          <br>
+          <div class="row">
+        {% endif %}
+		<div class="btn-group col-md-3">
+			<button type="button" class="btn btn-danger dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<strong>
+				{{ shift[4].month }}/{{ shift[4].day }}
+			</strong>
+			&#64;
+			{% if shift[3] == 1 %}
+				8:00am - 4:00pm
+			{% elif shift[3] == 2 %}
+				4:00pm - 12:00am
+			{% elif shift[3] == 3 %}
+				12:00am - 8:00am
+			{% endif %}
+			<span class="caret"></span>
+			</button>
+				<ul class="dropdown-menu">
+					<li><a href="#">Accept</a></li>
+				</ul>
+		</div>
+	{% endfor %}
+
+    <div class="row">
+    <h2>Open Shift Requests: </h2>
+    <!-- Regular Shifts -->
+      {% for shift in nonUrgentShifts %}
+        {% if shift == nonUrgentShifts[4] %}
+          </div>
+          <br>
+          <div class="row">
+        {% endif %}
+		<div class="btn-group col-md-3">
+			<button type="button" class="btn btn-default dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<strong>
+					{{ shift[4].month }}/{{ shift[4].day }}
+				</strong>
+				&#64;
+				{% if shift[3] == 1 %}
+					8:00am - 4:00pm
+				{% elif shift[3] == 2 %}
+					4:00pm - 12:00am
+				{% elif shift[3] == 3 %}
+					12:00am - 8:00am
+				{% endif %}
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="#">Accept</a></li>
+			</ul>
+		</div>
+	{% endfor %}
+
+</div>
 {% endblock %}

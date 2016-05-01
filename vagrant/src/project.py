@@ -186,7 +186,13 @@ def showOpenShifts():
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
-        return render_template('openShifts.html', userType=login_session['userType'])
+        user_id = getUserID(login_session.get('email'))
+        user_info = getUserInfo(user_id)
+        storeID = user_info[0][-1]
+        manager = getStoreManager(storeID)
+        nonUrgentShifts = getCurrentStoreNonUrgentShifts(storeID)
+        urgentShifts = getCurrentStoreUrgentShifts(storeID)
+        return render_template('openShifts.html', userType=login_session['userType'],manager=manager, nonUrgentShifts=nonUrgentShifts, urgentShifts=urgentShifts)
 
 
 # See the shifts that are currently assigned to the user logged in.
