@@ -218,7 +218,7 @@ def getRequestedShiftChanges(user_id):
     """ Returns all shift change requests created by the user. """
     try:
         db, cursor = connect()
-        query = "SELECT * FROM Shifts WHERE requestor_id = %s;"
+        query = "SELECT * FROM Shifts WHERE requestor_id = %s ORDER BY shift_day;"
         params = (user_id,)
         cursor.execute(query, params)
         shifts = cursor.fetchall()
