@@ -117,14 +117,14 @@ Ensure that Git, VirtualBox and Vagrant are all up to date and installed for the
 <br><br>
 If you receive an error when running vagrant ssh make sure you are using the Git command line interface.
 <br><br>
-Make sure to have Postgresql installed on your computer. If you receive an error message stating “psql: FATAL:  role "vagrant" does not exist” type the following (ignore any '<br>'):
+Make sure to have Postgresql installed on your computer. If you receive an error message stating “psql: FATAL:  role "vagrant" does not exist” type the following:
 <br>'exit'
 <br>'vagrant halt'
 <br>'vagrant destroy'
 <br>'vagrant up'
 <br>'vagrant ssh'
-<br>and continue the setup as normal.
-
+<br>and continue the setup as normal
+<br>
 
 Copyright and license
 ---------------------
