@@ -71,6 +71,25 @@ CREATE VIEW applicants As (
 	FROM Users
 	WHERE userType = 'Applicant');
 
+CREATE VIEW bob_ID AS (
+	-- Gets the user id for example user: bob
+	SELECT id
+	FROM Users
+	WHERE name = 'bob');
+
+CREATE VIEW sally_ID AS (
+	-- Gets the user id for example user: sally
+	SELECT id
+	FROM Users
+	WHERE name = 'sally');
+
+CREATE VIEW jon_ID AS (
+	-- Gets the user id for example user: jon
+	SELECT id
+	FROM Users
+	WHERE name = 'jon');
+
+
 -- Define default store entry
 INSERT INTO Stores(storeid, storemanagerid, location) VALUES (400, 1, '33.4215295,-111.9723862');
 INSERT INTO Stores(storeid, storemanagerid, location) VALUES (401, null, '33.4509285,-111.8448717');
@@ -195,3 +214,10 @@ INSERT INTO Users (name, email, picture) VALUES ('Jon','none','none');
 INSERT INTO Permissions (user_id) VALUES (1);
 INSERT INTO Permissions (user_id) VALUES (2);
 INSERT INTO Permissions (user_id) VALUES (3);
+INSERT INTO Shifts (requestor_ID, shift_number, shift_day, isUrgent, storeID) VALUES ((SELECT * FROM bob_ID), 2, '05/22/2016', true, 400);
+INSERT INTO Shifts (requestor_ID, shift_number, shift_day, isUrgent, storeID) VALUES ((SELECT * FROM bob_ID), 1, '05/22/2016', false, 400);
+INSERT INTO Shifts (requestor_ID, shift_number, shift_day, isUrgent, storeID) VALUES ((SELECT * FROM sally_ID), 3, '05/22/2016', true, 400);
+INSERT INTO Shifts (requestor_ID, shift_number, shift_day, isUrgent, storeID) VALUES ((SELECT * FROM sally_ID), 2, '05/22/2016', false, 400);
+INSERT INTO Shifts (requestor_ID, shift_number, shift_day, isUrgent, storeID) VALUES ((SELECT * FROM jon_ID), 1, '05/22/2016', false, 400);
+INSERT INTO Shifts (requestor_ID, shift_number, shift_day, isUrgent, storeID) VALUES ((SELECT * FROM jon_ID), 2, '05/22/2016', true, 400);
+INSERT INTO Shifts (requestor_ID, shift_number, shift_day, isUrgent, storeID) VALUES ((SELECT * FROM jon_ID), 3, '05/22/2016', false, 400);
