@@ -199,9 +199,13 @@ def showMyShifts():
         return render_template('publicHome.html')
     else:
         if request.method == 'POST':
-            # Database function here
-            flash('Changes Added Shift', 'success')
-            print str(request.form['date'])
+            user_id = getUserID(login_session.get('email'))
+            if request.form['urgent']:
+                createShift(user_id, request.form['time'], request.form['date'], True)
+            else:
+                createShift(user_id, request.form['time'], request.form['date'], is_urgent=False)
+            print request.form
+            flash('Successfully Added Shift', 'success')
             return redirect(url_for('showMyShifts', userType=login_session['userType']))
         return render_template('myShifts.html', userType=login_session['userType'])
 
