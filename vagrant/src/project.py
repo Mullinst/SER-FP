@@ -199,10 +199,12 @@ def showMyShifts():
         return render_template('publicHome.html')
     else:
         created_shifts = getRequestedShiftChanges(getUserID(login_session.get('email')))
-        print created_shifts
+        print request.form
         if request.method == 'POST':
+            if 'submitEdits' in request.form:
+                print "edits submitted"
+                return redirect(url_for('showMyShifts', userType=login_session['userType']))
             user_id = getUserID(login_session.get('email'))
-            print user_id
             if 'urgent' not in request.form:
                 createShift(user_id, request.form['time'], request.form['date'], False)
             else:
