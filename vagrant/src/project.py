@@ -190,7 +190,7 @@ def showOpenShifts():
 
 
 # See the shifts that are currently assigned to the user logged in.
-@app.route('/myShifts')
+@app.route('/myShifts', methods=['GET', 'POST'])
 def showMyShifts():
     if DEBUG:
         return render_template('myShifts.html', userType='debug')
@@ -198,7 +198,13 @@ def showMyShifts():
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
+        if request.method == 'POST':
+            # Database function here
+            flash('Changes Added Shift', 'success')
+            print str(request.form['date'])
+            return redirect(url_for('showMyShifts', userType=login_session['userType']))
         return render_template('myShifts.html', userType=login_session['userType'])
+
 
 
 @app.route('/schedule')
