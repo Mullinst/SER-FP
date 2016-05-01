@@ -251,8 +251,8 @@ def showAdminPanel():
             changeUserType(request.form['name'], request.form['type'])
             editUserPermissions(current_user_id, request.form['name'], request.form['post'], request.form['accept'], request.form['approve'], request.form['delete'])
             flash('Changes Successfully Made', 'success')
-            return redirect(url_for('showAdminPanel', userType=login_session['userType'], applicants=applicants, users=users))
-        return render_template('admin_panel.html', userType=login_session['userType'], applicants=applicants, users=users)
+            return redirect(url_for('showAdminPanel', userType=login_session['userType'], applicants=applicants, users=users,user_id=current_user_id))
+        return render_template('admin_panel.html', userType=login_session['userType'], applicants=applicants, users=users,user_id=current_user_id)
     else:
         return render_template('publicHome.html')
 
