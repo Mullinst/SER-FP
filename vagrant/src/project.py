@@ -213,9 +213,7 @@ def showMyShifts():
                 return redirect(url_for('showMyShifts', userType=login_session['userType']))
             user_id = getUserID(login_session.get('email'))
             if 'delete' in request.form:
-                print request.form['shiftID']
-                #result = deleteShift(request.form['shiftID'])
-                result = bool(request.form['shiftID'])
+                result = deleteShift(user_id, request.form['shiftID'])
                 if result == True:
                     flash('Successfully deleted shift!','success')
                 else:
