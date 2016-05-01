@@ -168,10 +168,19 @@ def editUserPermissions(current_user_id, user_id, post=True,
 def createShift(user_id, shift_number, date, is_urgent=False):
     """ Creates shift cover request """
     try:
-        print user_id
-        print shift_number
-        print date
-        print is_urgent
+        db, cursor = connect()
+        query = "SELECT storeID FROM Users WHERE id = %s;"
+        param = (user_id,)
+        print "user id is: " + param
+        cusor.execute(query, param)
+        storeID = cursor.fetchone()[0]
+        query = "INSERT INTO Shifts (requestor_user_ID, shift_number, shift_day, isUrgent, storeID) VALUES (%s,%s,%s,%s,%s);"
+        param = (user_id, shift_number, date, is_urgent, storeID,)
+        print "Param: " + param
+        cursor.execute(query, param)
+        db.commit()
+        db.close()
+        return True
     except:
         return None
 
