@@ -1,7 +1,7 @@
 SER Final Project - Group 18
 Thomas Norby, Troy Mullins, Robert King, Jacky Liang
 ==============================================
-
+<br>
 
 Table of Contents
 -----------------------------------
@@ -27,10 +27,10 @@ This program represents a scheduling application for a consulting company. Users
 Contribution
 -----------------------------------
 
-Team Member 1 Thomas Norby: Contribution
-Team Member 2 Troy Mullins: Contribution
-Team Member 3 Robert King: Contribution
-Team Member 4 Jacky Liang: Contribution
+Team Member 1 Thomas Norby: Contribution<br>
+Team Member 2 Troy Mullins: Contribution<br>
+Team Member 3 Robert King: Contribution<br>
+Team Member 4 Jacky Liang: Contribution<br>
 
 
 Required Libraries and Dependencies
