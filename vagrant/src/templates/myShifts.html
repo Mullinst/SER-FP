@@ -3,8 +3,6 @@
 {% block content %}
 <div>
 
-  <h1>My Shifts</h1>
-
   {% include "flash.html" %}
   <!-- Modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -67,6 +65,7 @@
     </div>
   </div>
 
+
   <div class="container">
     <div class="row">
       <!-- Button trigger modal -->
@@ -76,20 +75,51 @@
     </div>
     <br>
     <div class="row">
-      <table class="table table-striped table-responsive">
-        <thead>
-          <tr>
-            <th>ShiftID</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Store Location</th>
-            <th>Manager</th>
-            <th>Belonged To: (if applicable)</th>
-            <th>Put Shift On Market</th>
-          </tr>
-        </thead>
-      </table>
+      <h2>Requested change</h2>
     </div>
+    {% for shift in created_shifts %}
+      {% if shift[-2] == True %}
+        <!-- Urgent Shift -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-danger dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <strong>{{ shift[4].month }}/{{ shift[4].day }}</strong>
+            &#64;
+            {% if shift[3] == 1 %}
+              8:00am - 4:00pm
+            {% elif shift[3] == 2 %}
+              4:00pm - 12:00am
+            {% elif shift[3] == 3 %}
+              12:00am - 8:00am
+            {% endif %}
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#">edit</a></li>
+            <li><a href="#">Delete</a></li>
+          </ul>
+        </div>
+      {% else %}
+        <!-- Regular Shift -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <strong>{{ shift[4].month }}/{{ shift[4].day }}</strong>
+            &#64;
+            {% if shift[3] == 1 %}
+              8:00am - 4:00pm
+            {% elif shift[3] == 2 %}
+              4:00pm - 12:00am
+            {% elif shift[3] == 3 %}
+              12:00am - 8:00am
+            {% endif %}
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#">edit</a></li>
+            <li><a href="#">Delete</a></li>
+          </ul>
+        </div>
+      {% endif %}
+    {% endfor %}
   </div>
 
 {% endblock %}
