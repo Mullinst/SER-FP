@@ -83,7 +83,7 @@
                 <label for="shift">Shift</label>
                 <select name="shift" class="form-control"required>
                   {% for shift in created_shifts %}
-                    <option value="{{ shift[0] }}">
+                    <option value="{{ shift[0] }}" id="shift{{ shift[0] }}">
                       <strong>{{ shift[4].month }}/{{ shift[4].day }}</strong>
                       &#64;
                       {% if shift[3] == 1 %}
@@ -103,9 +103,9 @@
               <div class="form-group col-md-6">
                 <label for="time">Time</label>
                 <select name="time" class="form-control"required>
-                  <option value="1">8:00am - 4:00pm</option>
-                  <option value="2">4:00pm - 12:00am</option>
-                  <option value="3">12:00am - 8:00am</option>
+                  <option value="1" id="timeOpt1">8:00am - 4:00pm</option>
+                  <option value="2" id="timeOpt2">4:00pm - 12:00am</option>
+                  <option value="3" id="timeOpt3">12:00am - 8:00am</option>
                 </select>
               </div>
             </div>
@@ -114,21 +114,21 @@
               <div class="form-group col-md-6">
                 <label for="date">Date</label>
                 <br>
-                <input name="date" type="text" class="datepicker" required>
+                <input name="date" type="text" class="datepicker" id="editDate"required>
               </div>
             </div>
 
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="urgent">Urgent</label>
-                <input name="urgent" type="checkbox">
+                <input name="urgent" type="checkbox" id="urgentCheckbox">
               </div>
             </div>
 
             <div class="row">
               <div class="form-group">
                 <button type="submit" name="submitEdits" class="btn btn-primary pull-right">Submit Edits</button>
-                <button type="button" class="btn btn-default pull-right " data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button type="button" class="btn btn-default pull-right " data-dismiss="modal" aria-label="Close" id="editCancel">Cancel</button>
               </div>
             </div>
           </form>
@@ -185,56 +185,92 @@
     <div class="row">
       <h2>Requested change</h2>
     </div>
-    {% for shift in created_shifts %}
-      {% if shift[-2] == True %}
-        <!-- Urgent Shift -->
-        <div class="btn-group">
-          <button type="button" class="btn btn-danger dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <strong>{{ shift[4].month }}/{{ shift[4].day }}</strong>
-            &#64;
-            {% if shift[3] == 1 %}
-              8:00am - 4:00pm
-            {% elif shift[3] == 2 %}
-              4:00pm - 12:00am
-            {% elif shift[3] == 3 %}
-              12:00am - 8:00am
-            {% endif %}
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a href="#" data-toggle="modal" data-target="#editModal">edit</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#deleteModal"  class="delete_link" shiftID="{{ shift[0] }}">Delete</a></li>
-          </ul>
-        </div>
-      {% else %}
-        <!-- Regular Shift -->
-        <div class="btn-group">
-          <button type="button" class="btn btn-default dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <strong>{{ shift[4].month }}/{{ shift[4].day }}</strong>
-            &#64;
-            {% if shift[3] == 1 %}
-              8:00am - 4:00pm
-            {% elif shift[3] == 2 %}
-              4:00pm - 12:00am
-            {% elif shift[3] == 3 %}
-              12:00am - 8:00am
-            {% endif %}
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a href="#" data-toggle="modal" data-target="#editModal">edit</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#deleteModal" class="delete_link" shiftID="{{ shift[0] }}">Delete</a></li>
-          </ul>
-        </div>
-      {% endif %}
-    {% endfor %}
+    <div class="row">
+      {% for shift in created_shifts %}
+        {% if shift == created_shifts[4] %}
+          </div>
+          <br>
+          <div class="row">
+        {% endif %}
+        {% if shift[-2] == True %}
+          <!-- Urgent Shift -->
+          <div class="btn-group col-md-3">
+            <button type="button" class="btn btn-danger dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <strong>{{ shift[4].month }}/{{ shift[4].day }}</strong>
+              &#64;
+              {% if shift[3] == 1 %}
+                8:00am - 4:00pm
+              {% elif shift[3] == 2 %}
+                4:00pm - 12:00am
+              {% elif shift[3] == 3 %}
+                12:00am - 8:00am
+              {% endif %}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#" data-toggle="modal" data-target="#editModal" class="edit_link" class="edit_link" shiftID="{{ shift[0] }}" num="{{shift[3]}}" date="0{{shift[4].month}}/{{shift[4].day}}/{{shift[4].year}}" urgent="true">edit</a></li>
+              <li><a href="#" data-toggle="modal" data-target="#deleteModal"  class="delete_link" shiftID="{{ shift[0] }}">Delete</a></li>
+            </ul>
+          </div>
+        {% else %}
+          <!-- Regular Shift -->
+          <div class="btn-group col-md-3">
+            <button type="button" class="btn btn-default dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <strong>{{ shift[4].month }}/{{ shift[4].day }}</strong>
+              &#64;
+              {% if shift[3] == 1 %}
+                8:00am - 4:00pm
+              {% elif shift[3] == 2 %}
+                4:00pm - 12:00am
+              {% elif shift[3] == 3 %}
+                12:00am - 8:00am
+              {% endif %}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#" data-toggle="modal" data-target="#editModal" class="edit_link" shiftID="{{ shift[0] }}" num="{{shift[3]}}" date="0{{shift[4].month}}/{{shift[4].day}}/{{shift[4].year}}" urgent="false">edit</a></li>
+              <li><a href="#" data-toggle="modal" data-target="#deleteModal" class="delete_link" shiftID="{{ shift[0] }}">Delete</a></li>
+            </ul>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
   </div>
 <script>
+  // Delete function
   $(document).on('click', '.delete_link', function (event) {
     // Get shift id of the element that was pressed
     var shiftID = $(event.target).attr('shiftID');
     console.log(shiftID);
+    // Change value of shift to be deleted on delete modal form.
     $("#deleteID").attr("value", shiftID);
+  })
+
+  // Edit function
+  $(document).on('click', '.edit_link',function (event) {
+    // Get shift information
+    var shiftID = $(event.target).attr('shiftID');
+    var num = $(event.target).attr('num');
+    var date = $(event.target).attr('date');
+    var urgent = $(event.target).attr('urgent');
+    console.log(urgent);
+    // Change selected option on edit modal to match id
+    $("#shift" + shiftID).attr("selected", true)
+    // Change selected time option
+    $("#timeOpt" + num).attr("selected", true)
+    // Change date
+    $("#editDate").attr("value", date)
+    // Change urgent checkbox
+    if (urgent === true){
+      $("#urgentCheckbox").attr("checked", true);
+    } else {
+      $("#urgentCheckbox").attr("selected", false);
+    }
+  })
+
+  // Clear date field
+  $(document).on('click', '#editCancel', function (event) {
+    $("#editDate").removeAttr("value");
   })
 </script>
 {% endblock %}
