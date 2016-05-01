@@ -165,8 +165,28 @@ def editUserPermissions(current_user_id, user_id, post=True,
         return None
 
 
-def createShift(user_id, shift_number, date, is_urgent=False):
+def createShift(shift_id, shift_number, date, is_urgent=False):
     """ Creates shift cover request """
+    try:
+        db, cursor = connect()
+        query = "SELECT storeID FROM Users WHERE id = %s;"
+        param = (user_id,)
+        print param
+        cursor.execute(query, param)
+        storeID = cursor.fetchone()[0]
+        query = "UPDATE Shifts SET shift_number = %s, shift_day = %s, isUrgent = %s WHERE shiftID = %s;"
+        param = (int(shift_number), str(date), is_urgent, shift_id,)
+        print param
+        cursor.execute(query, param)
+        db.commit()
+        db.close()
+        return True
+    except:
+        return None
+
+
+def editShift(user_id, shift_number, date, is_urgent=False):
+    """ Edit given shift """
     try:
         db, cursor = connect()
         query = "SELECT storeID FROM Users WHERE id = %s;"
