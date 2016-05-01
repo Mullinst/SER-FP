@@ -202,7 +202,14 @@ def showMyShifts():
         print request.form
         if request.method == 'POST':
             if 'submitEdits' in request.form:
-                print "edits submitted"
+                if 'urgent' not in request.form:
+                    result = editShift(request.form['shift'], request.form['time'], request.form['date'], False)
+                else:
+                    result = editShift(request.form['shift'], request.form['time'], request.form['date'], True)
+                if result == True:
+                    flash('Successfully editted shift!','success')
+                else:
+                    flash('Error: Failed to edit shift.','error')
                 return redirect(url_for('showMyShifts', userType=login_session['userType']))
             user_id = getUserID(login_session.get('email'))
             if 'urgent' not in request.form:
