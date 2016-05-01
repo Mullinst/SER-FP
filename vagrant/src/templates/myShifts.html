@@ -80,6 +80,29 @@
 
             <div class="row">
               <div class="form-group col-md-6">
+                <label for="shift">Edit Shift</label>
+                <select name="shift" class="form-control"required>
+                  {% for shift in created_shifts %}
+                    <option value="{{ shift[0] }}">
+                      <strong>{{ shift[4].month }}/{{ shift[4].day }}</strong>
+                      &#64;
+                      {% if shift[3] == 1 %}
+                        8:00am - 4:00pm
+                      {% elif shift[3] == 2 %}
+                        4:00pm - 12:00am
+                      {% elif shift[3] == 3 %}
+                        12:00am - 8:00am
+                      {% endif %}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+            <h3>New values</h3>
+
+            <div class="row">
+              <div class="form-group col-md-6">
                 <label for="time">Shift</label>
                 <select name="time" class="form-control"required>
                   <option value="1">8:00am - 4:00pm</option>
@@ -129,6 +152,8 @@
 
   <!-- deleteModal -->
 
+
+  <!-- Page Content -->
   <div class="container">
     <div class="row">
       <!-- Button trigger modal -->
