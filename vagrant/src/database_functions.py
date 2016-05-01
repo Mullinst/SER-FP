@@ -165,18 +165,16 @@ def editUserPermissions(current_user_id, user_id, post=True,
         return None
 
 
-def createShift(shift_id, shift_number, date, is_urgent=False):
+def createShift(user_id, shift_number, date, is_urgent=False):
     """ Creates shift cover request """
     try:
         db, cursor = connect()
         query = "SELECT storeID FROM Users WHERE id = %s;"
         param = (user_id,)
-        print param
         cursor.execute(query, param)
         storeID = cursor.fetchone()[0]
-        query = "UPDATE Shifts SET shift_number = %s, shift_day = %s, isUrgent = %s WHERE shiftID = %s;"
-        param = (int(shift_number), str(date), is_urgent, shift_id,)
-        print param
+        query = "INSERT INTO Shifts (requestor_ID, shift_number, shift_day, isUrgent, storeID) VALUES (%s,%s,%s,%s,%s);"
+        param = (user_id, int(shift_number), str(date), is_urgent, storeID,)
         cursor.execute(query, param)
         db.commit()
         db.close()
@@ -185,18 +183,12 @@ def createShift(shift_id, shift_number, date, is_urgent=False):
         return None
 
 
-def editShift(user_id, shift_number, date, is_urgent=False):
+def editShift(shift_id, shift_number, date, is_urgent=False):
     """ Edit given shift """
     try:
         db, cursor = connect()
-        query = "SELECT storeID FROM Users WHERE id = %s;"
-        param = (user_id,)
-        print param
-        cursor.execute(query, param)
-        storeID = cursor.fetchone()[0]
-        query = "INSERT INTO Shifts (requestor_ID, shift_number, shift_day, isUrgent, storeID) VALUES (%s,%s,%s,%s,%s);"
-        param = (user_id, int(shift_number), str(date), is_urgent, storeID,)
-        print param
+        query = "UPDATE Shifts SET shift_number = %s, shift_day = %s, isUrgent = %s WHERE shiftID = %s;"
+        param = (int(shift_number), str(date), is_urgent, shift_id,)
         cursor.execute(query, param)
         db.commit()
         db.close()
