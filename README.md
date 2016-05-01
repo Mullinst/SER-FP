@@ -21,7 +21,8 @@ Table of Contents
 Introduction
 -----------------------------------
 
-This program represents a scheduling application for a consulting company. Users can log in and select shift information to display current, available and owned shifts.
+This program represents a scheduling application for a consulting company. It uses four tables Users, Permissions, Stores and Shifts. Demonstrated in our video you will see our GUI and query statements executed.
+Users can log in, create or delete users and query information about users such as permission levels.
 
 
 Contribution
@@ -48,16 +49,16 @@ To install and access the database use the following steps:<br>
 1. Download project repository.<br>
 2. In terminal (or equivalent command line application), navigate to the repository directory.<br>
 3. Navigate to the vagrant directory.<br>
-4. Execute the following commands in order:<br>
-	* `vagrant up` (powers on the virtual machine)<br>
-	* `vagrant ssh` (logs into the virtual machine)<br>
-	* `cd /vagrant` to change directory to the synced folders.<br>
-	* `cd src/` to change directory to src.<br>
-	* `psql` to access postgresql.<br>
-	* `\i filername.sql` to create filername database.<br>
-	* `\q` to exit database.<br>
-	* `python project.py` to run project.<br>
-	* Open browser to `http://localhost:8000`<br>
+4. Execute the following commands in order:<br><br><br>
+	• `vagrant up` (powers on the virtual machine)<br>
+	• `vagrant ssh` (logs into the virtual machine)<br>
+	• `cd /vagrant` to change directory to the synced folders.<br>
+	• `cd src/` to change directory to src.<br>
+	• `psql` to access postgresql.<br>
+	• `\i filername.sql` to create filername database.<br>
+	• `\q` to exit database.<br>
+	• `python project.py` to run project.<br>
+	• Open browser to `http://localhost:8000`<br>
 <br><br>
 You should now be able to access the database and select and view queries.
 <br><br>
