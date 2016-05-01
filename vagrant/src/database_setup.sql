@@ -47,6 +47,7 @@ CREATE TABLE Shifts (
 	shift_number integer,
 	shift_day date,
 	isUrgent boolean,
+	status text DEFAULT 'Active',
 	storeID integer REFERENCES Stores
 );
 
