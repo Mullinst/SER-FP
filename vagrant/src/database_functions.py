@@ -198,7 +198,27 @@ def editShift(shift_id, shift_number, date, is_urgent=False):
 
 def deleteShift(user_id, shift_id):
     """ Deletes given shift """
-    return None
+    try:
+        db, cursor = connect()
+        # Get requestor ID
+        query = "SELECT requestor_ID FROM Shifts WHERE shiftID = %s"
+        param = (shift_id,)
+        cursor.execute(query, param)
+        ownerID = cursor.fetchone()[0]
+        # Get users delete permission
+        query = "SELECT delete_requests FROM Permissions WHERE user_id = %s"
+        param = (user_id,)
+        cursor.execute(query, param)
+        userDeletePerm = cursor.fetchone()[0]
+        if user_id == ownerID or userDeletePerm == True:
+            query = "DELETE FROM Shifts WHERE shiftID = %s;"
+            param = (shift_id,)
+            cursor.execute(query, param)
+            db.commit()
+            db.close()
+            return True
+    except:
+        return None
 
 def getApplicants():
     """ Returns the id and name pairs of all applicants. """
