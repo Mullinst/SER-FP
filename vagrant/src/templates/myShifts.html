@@ -264,6 +264,58 @@
       {% endfor %}
     </div>
 
+    <br>
+    <br>
+
+    <div class="row">
+      <h3>Shifts Accepted: </h3>
+      <p> You are now responsible for working these shifts.</p>
+    </div>
+
+    <div class="row">
+      <!-- Accepted Shifts -->
+      {% for shift in approved_accepts %}
+        <div class="btn-group col-md-3">
+          <button type="button" class="btn btn-success dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <strong>{{ shift[4].month }}/{{ shift[4].day }}</strong>
+            &#64;
+            {% if shift[3] == 1 %}
+              8:00am - 4:00pm
+            {% elif shift[3] == 2 %}
+              4:00pm - 12:00am
+            {% elif shift[3] == 3 %}
+              12:00am - 8:00am
+            {% endif %}
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+
+    <br>
+
+    <div class="row">
+      <h3>Shifts Traded: </h3>
+      <p> You are <strong>no longer</strong> responsible for working these shifts.</p>
+    </div>
+
+    <div class="row">
+      <!-- Accepted Shifts -->
+      {% for shift in approved_requests %}
+        <div class="btn-group col-md-3">
+          <button type="button" class="btn btn-success dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <strong>{{ shift[4].month }}/{{ shift[4].day }}</strong>
+            &#64;
+            {% if shift[3] == 1 %}
+              8:00am - 4:00pm
+            {% elif shift[3] == 2 %}
+              4:00pm - 12:00am
+            {% elif shift[3] == 3 %}
+              12:00am - 8:00am
+            {% endif %}
+          </button>
+        </div>
+      {% endfor %}
+    </div>
   </div>
 <script>
   // Delete function
