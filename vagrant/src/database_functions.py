@@ -375,6 +375,49 @@ def getPendingShiftChangesByUser(user_id):
     except:
         return None
 
+
+def getApprovedShiftChangesByStore(store_id):
+    """ Returns all approved shift changes for a given store. """
+    try:
+        db, cursor = connect()
+        query = "SELECT * FROM Shifts WHERE storeID = %s AND status = 'Approved' ORDER BY shift_day;"
+        params = (store_id,)
+        cursor.execute(query, params)
+        shifts = cursor.fetchall()
+        db.close()
+        return shifts
+    except:
+        return None
+
+
+def getApprovedShiftChangesByRequestorID(user_id):
+    """ Returns all approved shift changes a given user is involved in. """
+    try:
+        db, cursor = connect()
+        query = "SELECT * FROM Shifts WHERE requestor_id = %s AND status = 'Approved' ORDER BY shift_day;"
+        params = (user_id,)
+        cursor.execute(query, params)
+        shifts = cursor.fetchall()
+        db.close()
+        return shifts
+    except:
+        return None
+
+
+def getApprovedShiftChangesByAcceptorID(user_id):
+    """ Returns all approved shift changes a given user is involved in. """
+    try:
+        db, cursor = connect()
+        query = "SELECT * FROM Shifts WHERE acceptor_ID = %s AND status = 'Approved' ORDER BY shift_day;"
+        params = (user_id,)
+        cursor.execute(query, params)
+        shifts = cursor.fetchall()
+        db.close()
+        return shifts
+    except:
+        return None
+
+
 def getCurrentStoreNonUrgentShifts(user_id, store_id):
     """ Returns all the shifts for a given store. """
     try:
