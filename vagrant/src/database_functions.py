@@ -196,6 +196,20 @@ def editShift(shift_id, shift_number, date, is_urgent=False):
     except:
         return None
 
+
+def acceptShift(user_id, shift_id):
+    """ Updates shift to reflect acceptors information. """
+    try:
+        db, cursor = connect()
+        query = "UPDATE Shifts SET acceptor_ID = %s, status = 'Pending' WHERE shiftID = %s;"
+        param = (user_id,shift_id,)
+        cursor.execute(query, param)
+        db.commit()
+        db.close()
+        return True
+    except:
+        return None
+
 def deleteShift(user_id, shift_id):
     """ Deletes given shift """
     try:
@@ -256,5 +270,51 @@ def getRequestedShiftChanges(user_id):
         shifts = cursor.fetchall()
         db.close()
         return shifts
+    except:
+        return None
+
+
+def getCurrentStoreNonUrgentShifts(storeID):
+    """ Returns all the shifts for a given store. """
+    try:
+        db, cursor = connect()
+        query = "SELECT * FROM Shifts WHERE storeID = %s AND status = 'Active' AND isUrgent = false ORDER BY shift_day;"
+        params = (storeID,)
+        cursor.execute(query, params)
+        shifts = cursor.fetchall()
+        db.close()
+        return shifts
+    except:
+        return None
+
+
+def getCurrentStoreUrgentShifts(storeID):
+    """ Returns all the shifts for a given store. """
+    try:
+        db, cursor = connect()
+        query = "SELECT * FROM Shifts WHERE storeID = %s AND status = 'Active' AND isUrgent = false ORDER BY shift_day;"
+        params = (storeID,)
+        cursor.execute(query, params)
+        shifts = cursor.fetchall()
+        db.close()
+        return shifts
+    except:
+        return None
+
+
+def getStoreManager(storeID):
+    """ Returns the name of the store manager for a given store. """
+    try:
+        db, cursor = connect()
+        query = "SELECT storeManagerID FROM Stores WHERE storeID = %s;"
+        params = (storeID,)
+        cursor.execute(query, params)
+        storeManagerID = cursor.fetchone()[0]
+        query = "SELECT name FROM Users WHERE id = %s;"
+        params = (storeManagerID,)
+        cursor.execute(query, params)
+        name = cursor.fetchone()[0]
+        db.close()
+        return name
     except:
         return None
