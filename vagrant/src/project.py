@@ -178,7 +178,7 @@ def showHome():
 
 # View open shifts
 # See all shifts that have been requested off by others.
-@app.route('/openShifts')
+@app.route('/openShifts', methods=['GET', 'POST'])
 def showOpenShifts():
     if DEBUG:
         return render_template('openShifts.html', userType='debug')
@@ -186,12 +186,30 @@ def showOpenShifts():
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
+        # Get pertinent information
         user_id = getUserID(login_session.get('email'))
         user_info = getUserInfo(user_id)
         storeID = user_info[0][-1]
         manager = getStoreManager(storeID)
         nonUrgentShifts = getCurrentStoreNonUrgentShifts(storeID)
         urgentShifts = getCurrentStoreUrgentShifts(storeID)
+
+        # If the method is post check if it was a delete or accept request.
+        if request.method == 'POST':
+            if 'delete' in request.form:
+                result = deleteShift(user_id, request.form['shiftID'])
+                if result == True:
+                    flash('Successfully deleted shift!','success')
+                else:
+                    flash('Error: Failed to delete shift.','error')
+                return redirect(url_for('showOpenShifts', userType=login_session['userType']))
+            elif 'accept' in request.form:
+                result = acceptShift(user_id, request.form['shiftID'])
+                if result == True:
+                    flash('Successfully accepted shift!','success')
+                else:
+                    flash('Error: Failed to accept shift.','error')
+                return redirect(url_for('showOpenShifts', userType=login_session['userType']))
         return render_template('openShifts.html', userType=login_session['userType'],manager=manager, nonUrgentShifts=nonUrgentShifts, urgentShifts=urgentShifts)
 
 
@@ -205,7 +223,6 @@ def showMyShifts():
         return render_template('publicHome.html')
     else:
         created_shifts = getRequestedShiftChanges(getUserID(login_session.get('email')))
-        print request.form
         if request.method == 'POST':
             if 'submitEdits' in request.form:
                 if 'urgent' not in request.form:
