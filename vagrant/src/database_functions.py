@@ -4,10 +4,9 @@
 # Licensed under MIT
 # (https://github.com/Mullinst/SER-FP/blob/master/LICENSE)
 #
-# database_functions.py -- 
+# database_functions.py -- All functions for interacting with the database.
 
 import psycopg2
-
 
 def connect(database_name="database"):
     """Connect to the PostgreSQL database.  Returns a database connection."""
@@ -18,85 +17,30 @@ def connect(database_name="database"):
     except:
         print("Error connecting to the database: {}".format(database_name))
 
-# User Helper Functions
+
+# ---------------- #
+#  User Functions  #
+# ---------------- #
 def createUser(login_session):
     """ creates a user using login session information """
-    db, cursor = connect()
-    name = login_session.get('username')
-    email = login_session.get('email')
-    picture = login_session.get('picture')
-    query = "INSERT INTO Users (name, email, picture) VALUES (%s,%s,%s);"
-    param = (name, email, picture,)
-    cursor.execute(query, param)
-    query = "SELECT id FROM Users WHERE email = %s;"
-    param = (email,)
-    cursor.execute(query, param)
-    user_id = cursor.fetchone()[0]
-    query = "INSERT INTO Permissions (user_id) VALUES (%s);"
-    param = (user_id,)
-    cursor.execute(query, param)
-    db.commit()
-    db.close()
-    return user_id
-
-
-def deleteUser(user_id):
-    """ Deletes user from users table and returns the users information """
     try:
         db, cursor = connect()
-        # Delete user permissions
-        query = "DELETE FROM Permissions WHERE user_id = %s;"
-        param = (user_id,)
+        name = login_session.get('username')
+        email = login_session.get('email')
+        picture = login_session.get('picture')
+        query = "INSERT INTO Users (name, email, picture) VALUES (%s,%s,%s);"
+        param = (name, email, picture,)
         cursor.execute(query, param)
-        # Delete user from Users table
-        query = "DELETE FROM Users WHERE id = %s RETURNING *;"
-        cursor.execute(query, param)
-        user = cursor.fetchall()
-        db.commit()
-        db.close()
-        return user
-    except:
-        return None
-
-
-def getUserInfo(user_id):
-    """ Returns user iformation for specified user """
-    try:
-        db, cursor = connect()
-        query = "SELECT * FROM Users WHERE id = %s;"
-        param = (user_id,)
-        cursor.execute(query, param)
-        user = cursor.fetchall()
-        db.close()
-        return user
-    except:
-        return None
-
-
-def getUserID(email):
-    """ Returns user id associated with given email """
-    try:
-        db, cursor = connect()
         query = "SELECT id FROM Users WHERE email = %s;"
         param = (email,)
         cursor.execute(query, param)
         user_id = cursor.fetchone()[0]
-        db.close()
-        return user_id
-    except:
-        return None
-
-
-def getUserType(user_id):
-    """ Returns userType for given user. """
-    try:
-        db, cursor = connect()
-        query = "SELECT userType FROM Users WHERE id = %s;"
+        query = "INSERT INTO Permissions (user_id) VALUES (%s);"
         param = (user_id,)
         cursor.execute(query, param)
-        userType = cursor.fetchone()[0]
+        db.commit()
         db.close()
-        return userType
+        return user_id
     except:
         return None
 
@@ -165,6 +109,116 @@ def editUserPermissions(current_user_id, user_id, post=True,
         return None
 
 
+def deleteUser(user_id):
+    """ Deletes user from users table and returns the users information """
+    try:
+        db, cursor = connect()
+        # Delete user permissions
+        query = "DELETE FROM Permissions WHERE user_id = %s;"
+        param = (user_id,)
+        cursor.execute(query, param)
+        # Delete user from Users table
+        query = "DELETE FROM Users WHERE id = %s RETURNING *;"
+        cursor.execute(query, param)
+        user = cursor.fetchall()
+        db.commit()
+        db.close()
+        return user
+    except:
+        return None
+
+
+def getUserInfo(user_id):
+    """ Returns user iformation for specified user """
+    try:
+        db, cursor = connect()
+        query = "SELECT * FROM Users WHERE id = %s;"
+        param = (user_id,)
+        cursor.execute(query, param)
+        user = cursor.fetchall()
+        db.close()
+        return user
+    except:
+        return None
+
+
+def getUserID(email):
+    """ Returns user id associated with given email """
+    try:
+        db, cursor = connect()
+        query = "SELECT id FROM Users WHERE email = %s;"
+        param = (email,)
+        cursor.execute(query, param)
+        user_id = cursor.fetchone()[0]
+        db.close()
+        return user_id
+    except:
+        return None
+
+
+def getUserType(user_id):
+    """ Returns userType for given user. """
+    try:
+        db, cursor = connect()
+        query = "SELECT userType FROM Users WHERE id = %s;"
+        param = (user_id,)
+        cursor.execute(query, param)
+        userType = cursor.fetchone()[0]
+        db.close()
+        return userType
+    except:
+        return None
+
+
+def getApplicants():
+    """ Returns the id and name pairs of all applicants. """
+    try:
+        db, cursor = connect()
+        query = "SELECT * FROM applicants;"
+        cursor.execute(query)
+        applicants = cursor.fetchall()
+        db.close()
+        return applicants
+    except:
+        return None
+
+
+def getUsers():
+    """ Returns id and name pairs for all users. """
+    try:
+        db, cursor = connect()
+        query = "SELECT id, name FROM Users;"
+        cursor.execute(query)
+        users = cursor.fetchall()
+        db.close()
+        return users
+    except:
+        return None
+
+
+def getStoreManager(storeID):
+    """ Returns the name of the store manager for a given store. """
+    try:
+        db, cursor = connect()
+        query = "SELECT storeManagerID FROM Stores WHERE storeID = %s;"
+        params = (storeID,)
+        cursor.execute(query, params)
+        storeManagerID = cursor.fetchone()[0]
+        query = "SELECT name FROM Users WHERE id = %s;"
+        params = (storeManagerID,)
+        cursor.execute(query, params)
+        name = cursor.fetchone()[0]
+        db.close()
+        return name
+    except:
+        return None
+
+
+
+
+# ----------------- #
+#  Shift Functions  #
+# ----------------- #
 def createShift(user_id, shift_number, date, is_urgent=False):
     """ Creates shift cover request """
     try:
@@ -197,19 +251,6 @@ def editShift(shift_id, shift_number, date, is_urgent=False):
         return None
 
 
-def acceptShift(user_id, shift_id):
-    """ Updates shift to reflect acceptors information. """
-    try:
-        db, cursor = connect()
-        query = "UPDATE Shifts SET acceptor_ID = %s, status = 'Pending' WHERE shiftID = %s;"
-        param = (user_id,shift_id,)
-        cursor.execute(query, param)
-        db.commit()
-        db.close()
-        return True
-    except:
-        return None
-
 def deleteShift(user_id, shift_id):
     """ Deletes given shift """
     try:
@@ -234,28 +275,17 @@ def deleteShift(user_id, shift_id):
     except:
         return None
 
-def getApplicants():
-    """ Returns the id and name pairs of all applicants. """
+
+def acceptShift(user_id, shift_id):
+    """ Updates shift to reflect acceptors information. """
     try:
         db, cursor = connect()
-        query = "SELECT * FROM applicants;"
-        cursor.execute(query)
-        applicants = cursor.fetchall()
+        query = "UPDATE Shifts SET acceptor_ID = %s, status = 'Pending' WHERE shiftID = %s;"
+        param = (user_id,shift_id,)
+        cursor.execute(query, param)
+        db.commit()
         db.close()
-        return applicants
-    except:
-        return None
-
-
-def getUsers():
-    """ Returns id and name pairs for all users. """
-    try:
-        db, cursor = connect()
-        query = "SELECT id, name FROM Users;"
-        cursor.execute(query)
-        users = cursor.fetchall()
-        db.close()
-        return users
+        return True
     except:
         return None
 
@@ -274,12 +304,38 @@ def getRequestedShiftChanges(user_id):
         return None
 
 
-def getCurrentStoreNonUrgentShifts(storeID):
+def getPendingShiftChangesByStore(store_id):
+    """ Returns all pending shift changes for a given store. """
+    try:
+        db, cursor = connect()
+        query = "SELECT * FROM Shifts WHERE storeID = %s AND status = 'Pending' ORDER BY shift_day;"
+        params = (store_id,)
+        cursor.execute(query, params)
+        shifts = cursor.fetchall()
+        db.close()
+        return shifts
+    except:
+        return None
+
+def getPendingShiftChangesByUser(user_id):
+    """ Returns all pending shift changes a given user is involved in. """
+    try:
+        db, cursor = connect()
+        query = "SELECT * FROM Shifts WHERE (requestor_id = %s or acceptor_ID = %s) AND status = 'Pending' ORDER BY shift_day;"
+        params = (user_id, user_id,)
+        cursor.execute(query, params)
+        shifts = cursor.fetchall()
+        db.close()
+        return shifts
+    except:
+        return None
+
+def getCurrentStoreNonUrgentShifts(store_id):
     """ Returns all the shifts for a given store. """
     try:
         db, cursor = connect()
         query = "SELECT * FROM Shifts WHERE storeID = %s AND status = 'Active' AND isUrgent = false ORDER BY shift_day;"
-        params = (storeID,)
+        params = (store_id,)
         cursor.execute(query, params)
         shifts = cursor.fetchall()
         db.close()
@@ -288,33 +344,15 @@ def getCurrentStoreNonUrgentShifts(storeID):
         return None
 
 
-def getCurrentStoreUrgentShifts(storeID):
+def getCurrentStoreUrgentShifts(store_id):
     """ Returns all the shifts for a given store. """
     try:
         db, cursor = connect()
         query = "SELECT * FROM Shifts WHERE storeID = %s AND status = 'Active' AND isUrgent = false ORDER BY shift_day;"
-        params = (storeID,)
+        params = (store_id,)
         cursor.execute(query, params)
         shifts = cursor.fetchall()
         db.close()
         return shifts
-    except:
-        return None
-
-
-def getStoreManager(storeID):
-    """ Returns the name of the store manager for a given store. """
-    try:
-        db, cursor = connect()
-        query = "SELECT storeManagerID FROM Stores WHERE storeID = %s;"
-        params = (storeID,)
-        cursor.execute(query, params)
-        storeManagerID = cursor.fetchone()[0]
-        query = "SELECT name FROM Users WHERE id = %s;"
-        params = (storeManagerID,)
-        cursor.execute(query, params)
-        name = cursor.fetchone()[0]
-        db.close()
-        return name
     except:
         return None
