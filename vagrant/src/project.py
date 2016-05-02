@@ -224,6 +224,8 @@ def showMyShifts():
         user_id = getUserID(login_session.get('email'))
         created_shifts = getRequestedShiftChanges(user_id)
         pending_shifts = getPendingShiftChangesByUser(user_id)
+        approved_requests = getApprovedShiftChangesByRequestorID(user_id)
+        approved_accepts = getApprovedShiftChangesByAcceptorID(user_id)
         if request.method == 'POST':
             if 'submitEdits' in request.form:
                 if 'urgent' not in request.form:
@@ -250,7 +252,9 @@ def showMyShifts():
                 createShift(user_id, request.form['time'], request.form['date'], True)
             flash('Successfully Added Shift', 'success')
             return redirect(url_for('showMyShifts', userType=login_session['userType']))
-        return render_template('myShifts.html', userType=login_session['userType'], created_shifts=created_shifts,pending_shifts=pending_shifts)
+        return render_template('myShifts.html', userType=login_session['userType'],
+                                created_shifts=created_shifts,pending_shifts=pending_shifts,
+                                approved_requests=approved_requests, approved_accepts=approved_accepts)
 
 
 
