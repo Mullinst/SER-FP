@@ -82,11 +82,14 @@
 			{% endif %}
 			<span class="caret"></span>
 			</button>
-			{% if userType == 'Employee' %}
-				<ul class="dropdown-menu">
-					<li><a href="#" data-toggle="modal" data-target="#acceptModal" class="accept_link" shiftID="{{shift[0]}}">Accept</a></li>
-				</ul>
-			{% endif %}
+      <ul class="dropdown-menu">
+      {% if userType == 'Employee' %}
+          <li><a href="#" data-toggle="modal" data-target="#acceptModal" class="accept_link" shiftID="{{shift[0]}}">Accept</a></li>
+      {% endif %}
+      {% if delete_perms == true %}
+          <li><a href="#" data-toggle="modal" data-target="#deleteModal"  class="delete_link" shiftID="{{ shift[0] }}">Delete</a></li>
+      {% endif %}
+      </ul> 
 		</div>
 	{% endfor %}
 	</div>
@@ -118,11 +121,14 @@
 				{% endif %}
 				<span class="caret"></span>
 			</button>
+      <ul class="dropdown-menu">
 			{% if userType == 'Employee' %}
-				<ul class="dropdown-menu">
 					<li><a href="#" data-toggle="modal" data-target="#acceptModal" class="accept_link" shiftID="{{shift[0]}}">Accept</a></li>
-				</ul>
 			{% endif %}
+      {% if delete_perms == true %}
+          <li><a href="#" data-toggle="modal" data-target="#deleteModal"  class="delete_link" shiftID="{{ shift[0] }}">Delete</a></li>
+      {% endif %}
+      </ul> 
 		</div>
 	{% endfor %}
 	</div>
