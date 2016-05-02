@@ -26,7 +26,7 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Permissions (
-	user_id integer REFERENCES Users,
+	user_id integer PRIMARY KEY REFERENCES Users (id),
 	post boolean DEFAULT true,
 	accept boolean DEFAULT true,
 	approve_requests boolean DEFAULT false,
@@ -36,7 +36,7 @@ CREATE TABLE Permissions (
 
 CREATE TABLE Stores (
 	storeID serial PRIMARY KEY,
-	storeManagerID integer,
+	storeManagerID integer REFERENCES Users (id) DEFAULT 1,
 	location text
 );
 
@@ -91,7 +91,7 @@ CREATE VIEW jon_ID AS (
 
 
 -- Define default store entry
-INSERT INTO Stores(storeid, storemanagerid, location) VALUES (400, 1, '33.4215295,-111.9723862');
+INSERT INTO Stores(storeid, storemanagerid, location) VALUES (400, null, '33.4215295,-111.9723862');
 INSERT INTO Stores(storeid, storemanagerid, location) VALUES (401, null, '33.4509285,-111.8448717');
 INSERT INTO Stores(storeid, storemanagerid, location) VALUES (402, null, '33.3906167,-111.8417746');
 INSERT INTO Stores(storeid, storemanagerid, location) VALUES (404, null, '33.4220205,-111.6342207');
