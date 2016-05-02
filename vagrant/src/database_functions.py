@@ -196,6 +196,20 @@ def editShift(shift_id, shift_number, date, is_urgent=False):
     except:
         return None
 
+
+def acceptShift(user_id, shift_id):
+    """ Updates shift to reflect acceptors information. """
+    try:
+        db, cursor = connect()
+        query = "UPDATE Shifts SET acceptor_ID = %s, status = 'Pending' WHERE shiftID = %s;"
+        param = (user_id,shift_id,)
+        cursor.execute(query, param)
+        db.commit()
+        db.close()
+        return True
+    except:
+        return None
+
 def deleteShift(user_id, shift_id):
     """ Deletes given shift """
     try:
@@ -304,9 +318,3 @@ def getStoreManager(storeID):
         return name
     except:
         return None
-
-user_info = getUserInfo(4)
-print user_info
-storeID = user_info[0][-1]
-print storeID
-print getStoreManager(storeID)
