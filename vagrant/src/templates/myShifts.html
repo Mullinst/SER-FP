@@ -229,12 +229,33 @@
             </button>
             <ul class="dropdown-menu">
               <li><a href="#" data-toggle="modal" data-target="#editModal" class="edit_link" shiftID="{{ shift[0] }}" num="{{shift[3]}}" date="0{{shift[4].month}}/{{shift[4].day}}/{{shift[4].year}}" urgent="false">edit</a></li>
-              <li><a href="#" data-toggle="modal" data-target="#deleteModal" class="delete_link" shiftID="{{ shift[0] }}">Delete</a></li>
+              <li><a href="#" data-toggle="modal" data-target="#deleteModal" class="delete_link" shiftID="{{ shift[0] }}">delete</a></li>
             </ul>
           </div>
         {% endif %}
       {% endfor %}
     </div>
+
+
+    <div class="row">
+      <!-- Pending Shifts -->
+      {% for shift in pending_shifts %}
+        <div class="btn-group col-md-3">
+          <button type="button" class="btn btn-warning dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <strong>{{ shift[4].month }}/{{ shift[4].day }}</strong>
+            &#64;
+            {% if shift[3] == 1 %}
+              8:00am - 4:00pm
+            {% elif shift[3] == 2 %}
+              4:00pm - 12:00am
+            {% elif shift[3] == 3 %}
+              12:00am - 8:00am
+            {% endif %}
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+
   </div>
 <script>
   // Delete function
