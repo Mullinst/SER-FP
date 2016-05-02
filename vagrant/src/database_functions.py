@@ -179,15 +179,18 @@ def getUserType(user_id):
         return None
 
 
-def getApplicants():
-    """ Returns the id and name pairs of all applicants. """
+def getUserPermissions(user_id):
+    """ Returns permissions for a given user. """
     try:
         db, cursor = connect()
-        query = "SELECT * FROM applicants;"
-        cursor.execute(query)
-        applicants = cursor.fetchall()
+        query = ("SELECT post, accept, approve_requests, "
+                 "delete_requests, edit_permissions "
+                 "FROM Permissions WHERE user_id = %s;")
+        param = (user_id,)
+        cursor.execute(query, param)
+        perms = cursor.fetchall()[0]
         db.close()
-        return applicants
+        return perms
     except:
         return None
 
@@ -219,6 +222,20 @@ def getStoreManager(storeID):
         name = cursor.fetchone()[0]
         db.close()
         return name
+    except:
+        return None
+
+
+def getStoreManagerID(storeID):
+    """ Returns the ID of the store manager for a given store. """
+    try:
+        db, cursor = connect()
+        query = "SELECT storeManagerID FROM Stores WHERE storeID = %s;"
+        params = (storeID,)
+        cursor.execute(query, params)
+        storeManagerID = cursor.fetchone()[0]
+        db.close()
+        return storeManagerID
     except:
         return None
 
@@ -298,6 +315,25 @@ def acceptShift(user_id, shift_id):
     except:
         return None
 
+
+def approveShift(user_id, shift_id):
+    """ Updates status of shift change request if the user
+    calling the function has permission to approve requests. """
+    try:
+        db, cursor = connect()
+        query = "SELECT approve_requests FROM Permissions WHERE user_id = %s"
+        param = (user_id,)
+        cursor.execute(query, param)
+        result = cursor.fetchone()[0]
+        if result == True:
+            query = "UPDATE Shifts SET status = 'Approved' WHERE shiftID = %s;"
+            param = (shift_id,)
+            cursor.execute(query, param)
+            db.commit()
+            db.close()
+            return True
+    except:
+        return None
 
 def getRequestedShiftChanges(user_id):
     """ Returns all shift change requests created by the user. """
