@@ -254,10 +254,34 @@ def showMyShifts():
 
 
 
-@app.route('/schedule')
+@app.route('/schedule', methods=['GET', 'POST'])
 def showSchedule():
-    return render_template('publicHome.html')
-
+    if login_session['userType'] == 'Store Manager':
+        user_id = getUserID(login_session.get('email'))
+        print user_id
+        user_info = getUserInfo(user_id)
+        store_id = user_info[0][-1]
+        print store_id
+        manager = getStoreManagerID(store_id)
+        print manager
+        if manager != user_id:
+            flash('Database error: Store id mismatch, contact an admin for help.', 'error')
+            return redirect(url_for('showHome', userType=login_session['userType']))
+        pending_shifts = getPendingShiftChangesByStore(store_id)
+        if request.method == 'POST':
+            if 'approve' in request.form:
+                result = approveShift(user_id, request.form['shiftID'])
+                if result == True:
+                    flash('Successfully approving shift!','success')
+                else:
+                    flash('Error: Failed to approve shift.','error')
+                return redirect(url_for('showSchedule', userType=login_session['userType']))
+        return render_template('manager.html', userType=login_session['userType'], pending_shifts=pending_shifts)
+    elif 'user' in login_session:
+        flash('You do not have permission to access that.', 'error')
+        return render_template('Home.html')
+    else:
+        return render_template('publicHome.html')
 
 @app.route('/admin', methods=['GET', 'POST'])
 def showAdminPanel():
