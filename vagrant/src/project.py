@@ -189,10 +189,12 @@ def showOpenShifts():
         # Get pertinent information
         user_id = getUserID(login_session.get('email'))
         user_info = getUserInfo(user_id)
-        store_id = user_info[0][-1]
+        store_id = user_info[-1]
         manager = getStoreManager(store_id)
         nonUrgentShifts = getCurrentStoreNonUrgentShifts(user_id, store_id)
         urgentShifts = getCurrentStoreUrgentShifts(user_id, store_id)
+        user_perms = getUserPermissions(user_id)
+        delete_perms = user_perms[-2]
         # If the method is post check if it was a delete or accept request.
         if request.method == 'POST':
             if 'delete' in request.form:
@@ -209,7 +211,7 @@ def showOpenShifts():
                 else:
                     flash('Error: Failed to accept shift.','error')
                 return redirect(url_for('showOpenShifts', userType=login_session['userType']))
-        return render_template('openShifts.html', userType=login_session['userType'],manager=manager, nonUrgentShifts=nonUrgentShifts, urgentShifts=urgentShifts)
+        return render_template('openShifts.html', userType=login_session['userType'],manager=manager, nonUrgentShifts=nonUrgentShifts, urgentShifts=urgentShifts, delete_perms=delete_perms)
 
 
 # See the shifts that are currently assigned to the user logged in.
@@ -264,7 +266,7 @@ def showSchedule():
         user_id = getUserID(login_session.get('email'))
         print user_id
         user_info = getUserInfo(user_id)
-        store_id = user_info[0][-1]
+        store_id = user_info[-1]
         print store_id
         manager = getStoreManagerID(store_id)
         print manager
