@@ -144,7 +144,7 @@ def getUserInfo(user_id):
         query = "SELECT * FROM Users WHERE id = %s;"
         param = (user_id,)
         cursor.execute(query, param)
-        user = cursor.fetchall()
+        user = cursor.fetchall()[0]
         db.close()
         return user
     except:
