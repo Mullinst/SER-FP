@@ -330,12 +330,12 @@ def getPendingShiftChangesByUser(user_id):
     except:
         return None
 
-def getCurrentStoreNonUrgentShifts(store_id):
+def getCurrentStoreNonUrgentShifts(user_id, store_id):
     """ Returns all the shifts for a given store. """
     try:
         db, cursor = connect()
-        query = "SELECT * FROM Shifts WHERE storeID = %s AND status = 'Active' AND isUrgent = false ORDER BY shift_day;"
-        params = (store_id,)
+        query = "SELECT * FROM Shifts WHERE requestor_ID != %s AND storeID = %s AND status = 'Active' AND isUrgent = false ORDER BY shift_day;"
+        params = (user_id, store_id,)
         cursor.execute(query, params)
         shifts = cursor.fetchall()
         db.close()
@@ -344,12 +344,12 @@ def getCurrentStoreNonUrgentShifts(store_id):
         return None
 
 
-def getCurrentStoreUrgentShifts(store_id):
+def getCurrentStoreUrgentShifts(user_id, store_id):
     """ Returns all the shifts for a given store. """
     try:
         db, cursor = connect()
-        query = "SELECT * FROM Shifts WHERE storeID = %s AND status = 'Active' AND isUrgent = false ORDER BY shift_day;"
-        params = (store_id,)
+        query = "SELECT * FROM Shifts WHERE requestor_ID != %s AND  storeID = %s AND status = 'Active' AND isUrgent = true ORDER BY shift_day;"
+        params = (user_id, store_id,)
         cursor.execute(query, params)
         shifts = cursor.fetchall()
         db.close()
