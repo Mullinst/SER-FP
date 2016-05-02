@@ -1,17 +1,65 @@
 {% extends "main.html" %}
 {% include "navbar.html" %}
 {% block content %}
+  <!-- acceptModal -->
+  <div class="modal fade" id="acceptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      	<div class="modal-header">
+      		<h3>Accept Shift</h3>
+      	</div>
+        <div class="modal-body">
+          <h4>Shift information: </h4>
+        </div>
+        <div class="modal-footer">
+          <form class="col-md-12" action="{{url_for('showOpenShifts', userType=userType)}}" method="post">
+            <input name="shiftID" type="text" value="" id="acceptID" hidden="True"/>
+            <div class="row">
+              <div class="form-group">
+                <button type="submit" name="accept" class="btn btn-primary btn-lg pull-right">Accept</button>
+                <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" aria-label="Close">Cancel</button>
+              </div>
+            </div>
+          </form>
+        </div>    
+      </div>
+    </div>
+  </div>
+
+  <!-- deleteModal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">   
+        <div class="modal-body">
+          <h3>Are you sure you want to delete shift?</h3>
+        </div>
+        <div class="modal-footer">
+          <form class="col-md-12" action="{{url_for('showOpenShifts', userType=userType)}}" method="post">
+            <input name="shiftID" type="text" value="" id="deleteID" hidden="True"/>
+            <div class="row">
+              <div class="form-group">
+                <button type="submit" name="delete" class="btn btn-danger">Yes</button>
+                <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" aria-label="Close">No</button>
+              </div>
+            </div>
+          </form>
+        </div>    
+      </div>
+    </div>
+  </div>
+
+
 	<div class="container content-fluid">
 		<div class="row">
 			<h1>Store Manager: {{manager}}</h1>
 		</div>
-	</div>
 
 	{% include "flash.html" %}
 
 	<div class="row">
 		<h2>Urgent Shift Requests: </h2>
 	</div>
+	<div class="row">
 	<!-- Urgent Shift -->
 	{% for shift in urgentShifts %}
       	{% if shift == urgentShifts[4] %}
@@ -20,7 +68,7 @@
           <div class="row">
         {% endif %}
 		<div class="btn-group col-md-3">
-			<button type="button" class="btn btn-danger dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button type="button" class="btn btn-danger dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="urgent{{shift[0]}}">
 			<strong>
 				{{ shift[4].month }}/{{ shift[4].day }}
 			</strong>
@@ -34,11 +82,17 @@
 			{% endif %}
 			<span class="caret"></span>
 			</button>
+			{% if userType == 'Employee' %}
 				<ul class="dropdown-menu">
-					<li><a href="#">Accept</a></li>
+					<li><a href="#" data-toggle="modal" data-target="#acceptModal" class="accept_link" shiftID="{{shift[0]}}">Accept</a></li>
 				</ul>
+			{% endif %}
 		</div>
 	{% endfor %}
+	</div>
+
+	<br>
+	<br>
 
     <div class="row">
     <h2>Open Shift Requests: </h2>
@@ -64,11 +118,32 @@
 				{% endif %}
 				<span class="caret"></span>
 			</button>
-			<ul class="dropdown-menu">
-				<li><a href="#">Accept</a></li>
-			</ul>
+			{% if userType == 'Employee' %}
+				<ul class="dropdown-menu">
+					<li><a href="#" data-toggle="modal" data-target="#acceptModal" class="accept_link" shiftID="{{shift[0]}}">Accept</a></li>
+				</ul>
+			{% endif %}
 		</div>
 	{% endfor %}
-
+	</div>
 </div>
+<script>
+  // Delete function
+  $(document).on('click', '.delete_link', function (event) {
+    // Get shift id of the element that was pressed
+    var shiftID = $(event.target).attr('shiftID');
+    console.log(shiftID);
+    // Change value of shift to be deleted on delete modal form.
+    $("#deleteID").attr("value", shiftID);
+  })
+
+  // Accept function
+  $(document).on('click', '.accept_link', function (event) {
+    // Get shift id of the element that was pressed
+    var shiftID = $(event.target).attr('shiftID');
+    console.log(shiftID);
+    // Change value of shift to be deleted on delete modal form.
+    $("#acceptID").attr("value", shiftID);
+  })
+</script>
 {% endblock %}
