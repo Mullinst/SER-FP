@@ -53,9 +53,18 @@ def changeUserType(user_id, userType):
             query = "UPDATE Users SET userType = %s WHERE id = %s"
             param = (userType, user_id,)
             cursor.execute(query, param)
+            query = "SELECT userType FROM Users WHERE id = %s"
+            param = (user_id,)
+            cursor.execute(query, param)
+            selected_type = cursor.fetchone()[0]
+            if selected_type == 'Admin':
+                # By default, all admins have permission to edit permissions.
+                query = "UPDATE Permissions SET edit_permissions = true WHERE id = %s"
+                param = (user_id,)
+                cursor.execute(query, param)
             db.commit()
             db.close()
-            return userType
+            return selected_type
         else:
             return None
     except:
