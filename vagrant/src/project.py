@@ -188,12 +188,14 @@ def showOpenShifts():
     else:
         # Get pertinent information
         user_id = getUserID(login_session.get('email'))
+        print user_id
         user_info = getUserInfo(user_id)
-        storeID = user_info[0][-1]
-        manager = getStoreManager(storeID)
-        nonUrgentShifts = getCurrentStoreNonUrgentShifts(storeID)
-        urgentShifts = getCurrentStoreUrgentShifts(storeID)
-
+        store_id = user_info[0][-1]
+        manager = getStoreManager(store_id)
+        nonUrgentShifts = getCurrentStoreNonUrgentShifts(user_id, store_id)
+        print nonUrgentShifts
+        urgentShifts = getCurrentStoreUrgentShifts(user_id, store_id)
+        print urgentShifts
         # If the method is post check if it was a delete or accept request.
         if request.method == 'POST':
             if 'delete' in request.form:
