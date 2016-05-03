@@ -30,13 +30,6 @@ def createUser(login_session):
         name = login_session.get('username')
         email = login_session.get('email')
         picture = login_session.get('picture')
-        # Check that email does not exist in database
-        query = "SELECT * FROM Users WHERE email = %s;"
-        param = (email,)
-        cursor.execute(query, param)
-        results = cursor.fetchall()
-        if results.length != 0:
-             return None
         query = "INSERT INTO Users (name, email, picture) VALUES (%s,%s,%s);"
         param = (name, email, picture,)
         cursor.execute(query, param)
