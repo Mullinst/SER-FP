@@ -258,7 +258,7 @@ def createShift(user_id, shift_number, date, is_urgent=False):
     """ Creates shift cover request """
     try:
         db, cursor = connect()
-        # Get users accept permission
+        # Get users post permission
         query = "SELECT post FROM Permissions WHERE user_id = %s"
         param = (user_id,)
         cursor.execute(query, param)
@@ -276,6 +276,26 @@ def createShift(user_id, shift_number, date, is_urgent=False):
             return True
     except:
         return None
+
+
+def relistShift(user_id, shift_id):
+    """ Edits shift to reflect relisting """
+    try:
+        db, cursor = connect()
+        # Get users post permission
+        query = "SELECT post FROM Permissions WHERE user_id = %s"
+        param = (user_id,)
+        cursor.execute(query, param)
+        postPerm = cursor.fetchone()[0]
+        if postPerm == True:
+            query = "UPDATE Shifts SET requestor_ID = %s, acceptor_ID = null, isUrgent = true, status = 'Active' WHERE shiftID = %s;"
+            param = (user_id, shift_id,)
+            cursor.execute(query, param)
+            db.commit()
+            db.close()
+            return True
+    except:
+        return None    
 
 
 def editShift(shift_id, shift_number, date, is_urgent=False):
