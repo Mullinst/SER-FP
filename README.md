@@ -6,11 +6,11 @@ Thomas Norby, Troy Mullins, Robert King, Jacky Liang
 Table of Contents
 -----------------------------------
 
-1. [Introduction](Introduction)
-2. Contribution
+1. [Introduction](#Introduction)
+2. [Contribution](#Contribution)
 3. Required Libraries and Dependencies
 4. Installation
-5. Terminating Executables 
+5. Terminating executables 
 6. Useful Documentation
 7. Useful Git commands
 8. Commit Message Syntax
@@ -18,14 +18,14 @@ Table of Contents
 10. Copyright and license
 
 
-#Introduction
------------------------------------
+Introduction
+====================================
 
 This program represents a scheduling application for a consulting company. It uses four tables Users, Permissions, Stores and Shifts. Demonstrated in our video you will see our GUI and query statements executed. Users can log in, create or delete users and query information about users such as permission levels.
 
 
-#Contribution
------------------------------------
+Contribution
+======================================
 
 * `Team Member 1 Thomas Norby:` All iterations of ER diagram and insert statements for populating the stores table
 * `Team Member 2 Troy Mullins:` Contribution
@@ -137,3 +137,50 @@ Make sure to have Postgresql installed on your computer. If you receive an error
 
 Code and documentation copyright 2016 Robert King, Jacky Liang, Troy Mullins, and Thomas Norby. Code released under [the MIT license](https://github.com/Mullinst/SER-FP/blob/master/LICENSE).
 
+
+
+
+
+
+
+
+
+
+
+
+
+# hello, This is Markdown Live Preview
+
+----
+## what is Markdown?
+see [Wikipedia](http://en.wikipedia.org/wiki/Markdown)
+
+> Markdown is a lightweight markup language, originally created by John Gruber and Aaron Swartz allowing people "to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML)".
+
+----
+## usage
+1. Write markdown text in this textarea.
+2. Click 'HTML Preview' button.
+
+----
+## markdown quick reference
+# headers
+
+*emphasis*
+
+**strong**
+
+* list
+
+>block quote
+
+    code (4 spaces indent)
+[links](http://wikipedia.org)
+
+----
+## changelog
+* 17-Feb-2013 re-design
+
+----
+## thanks
+* [markdown-js](https://github.com/evilstreak/markdown-js)
