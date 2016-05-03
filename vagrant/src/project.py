@@ -253,17 +253,22 @@ def showMyShifts():
 def showSchedule():
     if login_session['userType'] == 'Store Manager':
         user_id = getUserID(login_session.get('email'))
-        print user_id
         user_info = getUserInfo(user_id)
         store_id = user_info[-1]
-        print store_id
         manager = getStoreManagerID(store_id)
-        print manager
         if manager != user_id:
             flash('Database error: Store id mismatch, contact an admin for help.', 'error')
             return redirect(url_for('showHome', userType=login_session['userType']))
         pending_shifts = getPendingShiftChangesByStore(store_id)
+        user_perms = getUserPermissions(user_id)
         if request.method == 'POST':
+            if 'delete' in request.form:
+                result = deleteShift(user_id, request.form['shiftID'])
+                if result == True:
+                    flash('Successfully deleted shift!','success')
+                else:
+                    flash('Error: Failed to delete shift.','error')
+                return redirect(url_for('showSchedule', userType=login_session['userType']))
             if 'approve' in request.form:
                 result = approveShift(user_id, request.form['shiftID'])
                 if result == True:
@@ -271,7 +276,7 @@ def showSchedule():
                 else:
                     flash('Error: Failed to approve shift.','error')
                 return redirect(url_for('showSchedule', userType=login_session['userType']))
-        return render_template('manager.html', userType=login_session['userType'], pending_shifts=pending_shifts)
+        return render_template('manager.html', userType=login_session['userType'], pending_shifts=pending_shifts, user_perms=user_perms)
     elif 'user' in login_session:
         flash('You do not have permission to access that.', 'error')
         return render_template('Home.html')
