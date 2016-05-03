@@ -4,7 +4,8 @@
 # Licensed under MIT
 # (https://github.com/Mullinst/SER-FP/blob/master/LICENSE)
 #
-# project.py --
+# project.py -- Routing for shift trade app
+# @author - Troy Mullins
 
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, make_response
 from flask import session as login_session
@@ -18,9 +19,6 @@ app = Flask(__name__)
 # Loads client ID for use in logging in with google.
 CLIENT_ID = json.loads(
     open(os.path.dirname(os.path.abspath(__file__)) + '/client_secrets.json', 'r').read())['web']['client_id']
-
-# Set Debug to true for alternative routing paths.
-DEBUG = False
 
 
 # Create anti-forgery state token
@@ -161,9 +159,6 @@ def gdisconnect():
 # Show homepage
 @app.route('/')
 def showHome():
-    if DEBUG:
-        return render_template('home.html', userType='debug')
-
     # If user is not logged in render public homepage
     if 'username' not in login_session:
         return render_template('publicHome.html')
@@ -180,9 +175,6 @@ def showHome():
 # See all shifts that have been requested off by others.
 @app.route('/openShifts', methods=['GET', 'POST'])
 def showOpenShifts():
-    if DEBUG:
-        return render_template('openShifts.html', userType='debug')
-
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
@@ -194,7 +186,6 @@ def showOpenShifts():
         nonUrgentShifts = getCurrentStoreNonUrgentShifts(user_id, store_id)
         urgentShifts = getCurrentStoreUrgentShifts(user_id, store_id)
         user_perms = getUserPermissions(user_id)
-        delete_perms = user_perms[-2]
         # If the method is post check if it was a delete or accept request.
         if request.method == 'POST':
             if 'delete' in request.form:
@@ -211,15 +202,12 @@ def showOpenShifts():
                 else:
                     flash('Error: Failed to accept shift.','error')
                 return redirect(url_for('showOpenShifts', userType=login_session['userType']))
-        return render_template('openShifts.html', userType=login_session['userType'],manager=manager, nonUrgentShifts=nonUrgentShifts, urgentShifts=urgentShifts, delete_perms=delete_perms)
+        return render_template('openShifts.html', userType=login_session['userType'],manager=manager, nonUrgentShifts=nonUrgentShifts, urgentShifts=urgentShifts, user_perms=user_perms)
 
 
 # See the shifts that are currently assigned to the user logged in.
 @app.route('/myShifts', methods=['GET', 'POST'])
 def showMyShifts():
-    if DEBUG:
-        return render_template('myShifts.html', userType='debug')
-
     if 'username' not in login_session:
         return render_template('publicHome.html')
     else:
@@ -228,6 +216,7 @@ def showMyShifts():
         pending_shifts = getPendingShiftChangesByUser(user_id)
         approved_requests = getApprovedShiftChangesByRequestorID(user_id)
         approved_accepts = getApprovedShiftChangesByAcceptorID(user_id)
+        user_perms = getUserPermissions(user_id)
         if request.method == 'POST':
             if 'submitEdits' in request.form:
                 if 'urgent' not in request.form:
@@ -256,8 +245,8 @@ def showMyShifts():
             return redirect(url_for('showMyShifts', userType=login_session['userType']))
         return render_template('myShifts.html', userType=login_session['userType'],
                                 created_shifts=created_shifts,pending_shifts=pending_shifts,
-                                approved_requests=approved_requests, approved_accepts=approved_accepts)
-
+                                approved_requests=approved_requests,
+                                user_perms=user_perms, approved_accepts=approved_accepts)
 
 
 @app.route('/schedule', methods=['GET', 'POST'])
@@ -289,13 +278,9 @@ def showSchedule():
     else:
         return render_template('publicHome.html')
 
+
 @app.route('/admin', methods=['GET', 'POST'])
 def showAdminPanel():
-    if DEBUG:
-        applicants = [[1, 'Sally'], [2, 'Joe']]
-        users = [[1, 'Sally'], [2, 'Joe']]
-        return render_template('admin_panel.html', userType='debug', applicants=applicants, users=users)
-
     if login_session['userType'] == 'Admin':
         applicants = getApplicants()
         users = getUsers()
