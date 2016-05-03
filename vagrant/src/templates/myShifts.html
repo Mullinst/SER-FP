@@ -180,9 +180,11 @@
   <div class="container">
     <div class="row">
       <!-- Button trigger modal -->
+      {% if user_perms[1] == true %}
       <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
         Create New Shift Trade
       </button>
+      {% endif %}
     </div>
     <br>
     <div class="row">
@@ -208,12 +210,16 @@
               {% elif shift[3] == 3 %}
                 12:00am - 8:00am
               {% endif %}
-              <span class="caret"></span>
+              {% if user_perms[1] == true%}
+                <span class="caret"></span>
+              {% endif %}
             </button>
+            {% if user_perms[1] == true%}
             <ul class="dropdown-menu">
               <li><a href="#" data-toggle="modal" data-target="#editModal" class="edit_link" class="edit_link" shiftID="{{ shift[0] }}" num="{{shift[3]}}" date="0{{shift[4].month}}/{{shift[4].day}}/{{shift[4].year}}" urgent="true">edit</a></li>
               <li><a href="#" data-toggle="modal" data-target="#deleteModal"  class="delete_link" shiftID="{{ shift[0] }}">Delete</a></li>
             </ul>
+            {% endif %}
           </div>
         {% else %}
           <!-- Regular Shift -->

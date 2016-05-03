@@ -81,16 +81,20 @@
 			{% elif shift[3] == 3 %}
 				12:00am - 8:00am
 			{% endif %}
+      {% if user_perms[-2] == true or (userType == 'Employee' and user_perms[2] == true) %}
 			<span class="caret"></span>
+      {% endif %}
 			</button>
+      {% if user_perms[-2] == true or (userType == 'Employee' and user_perms[2] == true) %}
       <ul class="dropdown-menu">
-      {% if userType == 'Employee' %}
+      {% if userType == 'Employee' and user_perms[2] == true %}
           <li><a href="#" data-toggle="modal" data-target="#acceptModal" class="accept_link" shiftID="{{shift[0]}}">Accept</a></li>
       {% endif %}
-      {% if delete_perms == true %}
+      {% if user_perms[-2] == true %}
           <li><a href="#" data-toggle="modal" data-target="#deleteModal"  class="delete_link" shiftID="{{ shift[0] }}">Delete</a></li>
       {% endif %}
-      </ul> 
+      </ul>
+      {% endif %}
 		</div>
 	{% endfor %}
 	</div>
@@ -120,16 +124,20 @@
 				{% elif shift[3] == 3 %}
 					12:00am - 8:00am
 				{% endif %}
-				<span class="caret"></span>
-			</button>
+			{% if user_perms[-2] == true or (userType == 'Employee' and user_perms[2] == true) %}
+      <span class="caret"></span>
+      {% endif %}
+      </button>
+      {% if user_perms[-2] == true or (userType == 'Employee' and user_perms[2] == true) %}
       <ul class="dropdown-menu">
-			{% if userType == 'Employee' %}
-					<li><a href="#" data-toggle="modal" data-target="#acceptModal" class="accept_link" shiftID="{{shift[0]}}">Accept</a></li>
-			{% endif %}
-      {% if delete_perms == true %}
+      {% if userType == 'Employee' and user_perms[2] == true %}
+          <li><a href="#" data-toggle="modal" data-target="#acceptModal" class="accept_link" shiftID="{{shift[0]}}">Accept</a></li>
+      {% endif %}
+      {% if user_perms[-2] == true %}
           <li><a href="#" data-toggle="modal" data-target="#deleteModal"  class="delete_link" shiftID="{{ shift[0] }}">Delete</a></li>
       {% endif %}
-      </ul> 
+      </ul>
+      {% endif %}
 		</div>
 	{% endfor %}
 	</div>
