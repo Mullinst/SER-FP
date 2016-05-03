@@ -5,6 +5,7 @@
 # (https://github.com/Mullinst/SER-FP/blob/master/LICENSE)
 #
 # database_functions.py -- All functions for interacting with the database.
+# @author - Troy Mullins
 
 import psycopg2
 
@@ -257,16 +258,22 @@ def createShift(user_id, shift_number, date, is_urgent=False):
     """ Creates shift cover request """
     try:
         db, cursor = connect()
-        query = "SELECT storeID FROM Users WHERE id = %s;"
+        # Get users accept permission
+        query = "SELECT post FROM Permissions WHERE user_id = %s"
         param = (user_id,)
         cursor.execute(query, param)
-        storeID = cursor.fetchone()[0]
-        query = "INSERT INTO Shifts (requestor_ID, shift_number, shift_day, isUrgent, storeID) VALUES (%s,%s,%s,%s,%s);"
-        param = (user_id, int(shift_number), str(date), is_urgent, storeID,)
-        cursor.execute(query, param)
-        db.commit()
-        db.close()
-        return True
+        postPerm = cursor.fetchone()[0]
+        if postPerm == True:
+            query = "SELECT storeID FROM Users WHERE id = %s;"
+            param = (user_id,)
+            cursor.execute(query, param)
+            storeID = cursor.fetchone()[0]
+            query = "INSERT INTO Shifts (requestor_ID, shift_number, shift_day, isUrgent, storeID) VALUES (%s,%s,%s,%s,%s);"
+            param = (user_id, int(shift_number), str(date), is_urgent, storeID,)
+            cursor.execute(query, param)
+            db.commit()
+            db.close()
+            return True
     except:
         return None
 
@@ -314,12 +321,18 @@ def acceptShift(user_id, shift_id):
     """ Updates shift to reflect acceptors information. """
     try:
         db, cursor = connect()
-        query = "UPDATE Shifts SET acceptor_ID = %s, status = 'Pending' WHERE shiftID = %s;"
-        param = (user_id,shift_id,)
+        # Get users accept permission
+        query = "SELECT accept FROM Permissions WHERE user_id = %s"
+        param = (user_id,)
         cursor.execute(query, param)
-        db.commit()
-        db.close()
-        return True
+        acceptPerm = cursor.fetchone()[0]
+        if acceptPerm == True:
+            query = "UPDATE Shifts SET acceptor_ID = %s, status = 'Pending' WHERE shiftID = %s;"
+            param = (user_id,shift_id,)
+            cursor.execute(query, param)
+            db.commit()
+            db.close()
+            return True
     except:
         return None
 
