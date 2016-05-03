@@ -81,13 +81,13 @@
 			{% elif shift[3] == 3 %}
 				12:00am - 8:00am
 			{% endif %}
-      {% if user_perms[-2] == true or (userType == 'Employee' and user_perms[2] == true) %}
+      {% if user_perms[-2] == true or (userType == 'Employee' and user_perms[1] == true) %}
 			<span class="caret"></span>
       {% endif %}
 			</button>
-      {% if user_perms[-2] == true or (userType == 'Employee' and user_perms[2] == true) %}
+      {% if user_perms[-2] == true or (userType == 'Employee' and user_perms[1] == true) %}
       <ul class="dropdown-menu">
-      {% if userType == 'Employee' and user_perms[2] == true %}
+      {% if userType == 'Employee' and user_perms[1] == true %}
           <li><a href="#" data-toggle="modal" data-target="#acceptModal" class="accept_link" shiftID="{{shift[0]}}">Accept</a></li>
       {% endif %}
       {% if user_perms[-2] == true %}
@@ -124,13 +124,13 @@
 				{% elif shift[3] == 3 %}
 					12:00am - 8:00am
 				{% endif %}
-			{% if user_perms[-2] == true or (userType == 'Employee' and user_perms[2] == true) %}
+			{% if user_perms[-2] == true or (userType == 'Employee' and user_perms[1] == true) %}
       <span class="caret"></span>
       {% endif %}
       </button>
-      {% if user_perms[-2] == true or (userType == 'Employee' and user_perms[2] == true) %}
+      {% if user_perms[-2] == true or (userType == 'Employee' and user_perms[1] == true) %}
       <ul class="dropdown-menu">
-      {% if userType == 'Employee' and user_perms[2] == true %}
+      {% if userType == 'Employee' and user_perms[1] == true %}
           <li><a href="#" data-toggle="modal" data-target="#acceptModal" class="accept_link" shiftID="{{shift[0]}}">Accept</a></li>
       {% endif %}
       {% if user_perms[-2] == true %}
