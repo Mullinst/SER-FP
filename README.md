@@ -15,7 +15,8 @@ Table of Contents
 7. [Useful Git commands](#useful-commands)
 8. [Commit Message Syntax](#syntax)
 9. [Troubleshooting](#troubleshooting)
-10. [Copyright and license](#licensing)
+10. [Acknowledgements](#udacity)
+11. [Copyright and license](#licensing)
 
 
 <a name="introduction">Introduction</a>
@@ -28,9 +29,9 @@ This program represents a scheduling application for a consulting company. It us
 ============
 
 * `Team Member 1 Thomas Norby:` All iterations of ER diagram and insert statements for populating the stores table
-* `Team Member 2 Troy Mullins:` Contribution
-* `Team Member 3 Robert King:` Contribution
-* `Team Member 4 Jacky Liang:` Contribution
+* `Team Member 2 Troy Mullins:` All source code with the exception of insert statements for store information.
+* `Team Member 3 Robert King:` Edited READme
+* `Team Member 4 Jacky Liang:` Contributed to READme
 
 
 <a name="libraries">Required Libraries</a>
@@ -131,6 +132,12 @@ Make sure to have Postgresql installed on your computer. If you receive an error
 4. `vagrant up`
 5. `vagrant ssh`
 6. Continue the setup as normal
+
+
+<a name="">Acknowledgements</a>
+---------------------
+Vm and google login taken with permission from a project made based on classes from udacity.
+
 
 <a name="licensing">Copyright and Licensing</a>
 ---------------------
