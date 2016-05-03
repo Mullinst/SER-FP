@@ -236,7 +236,13 @@ def showMyShifts():
                 else:
                     flash('Error: Failed to delete shift.','error')
                 return redirect(url_for('showMyShifts', userType=login_session['userType']))
-
+            if 'relist' in request.form:
+                result = relistShift(user_id, request.form['shiftID'])
+                if result == True:
+                    flash('Successfully relisted shift!','success')
+                else:
+                    flash('Error: Failed to relist shift.','error')
+                return redirect(url_for('showMyShifts', userType=login_session['userType']))                
             if 'urgent' not in request.form:
                 createShift(user_id, request.form['time'], request.form['date'], False)
             else:
