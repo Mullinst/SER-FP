@@ -23,6 +23,27 @@
     </div>
   </div>
 
+  <!-- deleteModal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">   
+        <div class="modal-body">
+          <h3>Are you sure you want to delete shift?</h3>
+        </div>
+        <div class="modal-footer">
+          <form class="col-md-12" action="{{url_for('showSchedule', userType=userType)}}" method="post">
+            <input name="shiftID" type="text" value="" id="deleteID" hidden="True"/>
+            <div class="row">
+              <div class="form-group">
+                <button type="submit" name="delete" class="btn btn-danger">Yes</button>
+                <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" aria-label="Close">No</button>
+              </div>
+            </div>
+          </form>
+        </div>    
+      </div>
+    </div>
+  </div>
 
 	<div class="container content-fluid">
 
@@ -30,6 +51,9 @@
 
     <div class="row">
     <h2>Pending Requests: </h2>
+    {% if pending_shifts == [] %}
+      <h3>There are no pending requests.</h3>
+    {% endif %}
     <!-- Regular Shifts -->
       {% for shift in pending_shifts %}
         {% if shift == pending_shifts[4] %}
@@ -52,9 +76,16 @@
 				{% endif %}
 				<span class="caret"></span>
 			</button>
+      {% if user_perms[-2] == true and user_perms[-3] == true %}
 				<ul class="dropdown-menu">
+          {% if user_perms[-2] == true %}
 					<li><a href="#" data-toggle="modal" data-target="#approveModal" class="approve_link" shiftID="{{shift[0]}}">Accept</a></li>
+          {% endif %}
+          {% if user_perms[-2] == true %}
+          <li><a href="#" data-toggle="modal" data-target="#deleteModal"  class="delete_link" shiftID="{{ shift[0] }}">Delete</a></li>
+          {% endif %}
 				</ul>
+      {% endif %}
 		</div>
 	{% endfor %}
 	</div>
@@ -67,6 +98,15 @@
     console.log(shiftID);
     // Change value of shift to be approved on modal form.
     $("#approveID").attr("value", shiftID);
+  })
+
+  // Delete function
+  $(document).on('click', '.delete_link', function (event) {
+    // Get shift id of the element that was pressed
+    var shiftID = $(event.target).attr('shiftID');
+    console.log(shiftID);
+    // Change value of shift to be deleted on delete modal form.
+    $("#deleteID").attr("value", shiftID);
   })
 </script>
 {% endblock %}
