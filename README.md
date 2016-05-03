@@ -6,8 +6,8 @@ Thomas Norby, Troy Mullins, Robert King, Jacky Liang
 Table of Contents
 -----------------------------------
 
-1. [Introduction]
-2. [Contribution]
+1. [Introduction](#Introduction)
+2. [Contribution](#Contribution)
 3. Required Libraries and Dependencies
 4. Installation
 5. Terminating executables 
@@ -18,13 +18,13 @@ Table of Contents
 10. Copyright and license
 
 
-Introduction (#Introduction)
+#Introduction 
 ============
 
 This program represents a scheduling application for a consulting company. It uses four tables Users, Permissions, Stores and Shifts. Demonstrated in our video you will see our GUI and query statements executed. Users can log in, create or delete users and query information about users such as permission levels.
 
 
-Contribution (Contribution)
+Contribution 
 ============
 
 * `Team Member 1 Thomas Norby:` All iterations of ER diagram and insert statements for populating the stores table
