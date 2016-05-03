@@ -8,14 +8,14 @@ Table of Contents
 
 1. [Introduction](#introduction)
 2. [Contribution](#contribution)
-3. [Required Libraries and Dependencies]
-4. Installation
-5. Terminating executables 
-6. Useful Documentation
-7. Useful Git commands
-8. Commit Message Syntax
-9. Troubleshooting
-10. Copyright and license
+3. [Required Libraries and Dependencies](#libraries)
+4. [Installation](#installation)
+5. [Terminating executables](#terminating)
+6. [Useful Documentation](#documentation)
+7. [Useful Git commands](#useful-commands)
+8. [Commit Message Syntax](#syntax)
+9. [Troubleshooting](#troubleshooting)
+10. [Copyright and license](#licensing)
 
 
 <a name="introduction">Introduction</a>
@@ -24,7 +24,7 @@ Table of Contents
 This program represents a scheduling application for a consulting company. It uses four tables Users, Permissions, Stores and Shifts. Demonstrated in our video you will see our GUI and query statements executed. Users can log in, create or delete users and query information about users such as permission levels.
 
 
-Contribution 
+<a name="contribution">Contribution</a>
 ============
 
 * `Team Member 1 Thomas Norby:` All iterations of ER diagram and insert statements for populating the stores table
@@ -33,7 +33,7 @@ Contribution
 * `Team Member 4 Jacky Liang:` Contribution
 
 
-#Required Libraries and Dependencies
+<a name="libraries">Required Libraries</a>
 -----------------------------------
 
 1. [Git](http://git-scm.com/downloads)
@@ -41,7 +41,7 @@ Contribution
 3. [Vagrant](https://www.vagrantup.com)
 
 
-#Installation
+<a name="installation">Installation</a>
 ------------------
 
 To install and access the database use the following steps
@@ -65,7 +65,7 @@ You should now be able to access the database and select and view queries.
 For troubleshooting any of the above steps please see the `Troubleshooting` section below.
 
 
-#Terminating Executables 
+<a name="terminating">Terminating</a>
 --------------------
 
 To end your database session use the following steps:
@@ -75,7 +75,7 @@ To end your database session use the following steps:
 3. `vagrant halt` to shutdown virtual machine. 
 
 
-#Useful Documentation
+<a name="documentaiton">Useful Documentation</a>
 ---------------------
 
 Below is a list of different documentation for reference.
@@ -90,7 +90,7 @@ Below is a list of different documentation for reference.
 * [MDN](https://developer.mozilla.org/en-US/)
 
 
-#Basic Git Commands
+<a name="useful-commands">Useful Commands</a>
 --------------------
 
 Basic Git commands used in the creation of this project.
@@ -102,7 +102,7 @@ Basic Git commands used in the creation of this project.
 * `git push` to push local commits to github.
 
 
-#Commit Message Syntax
+<a name="syntax">Git Commit Syntax</a>
 ---------------------
 
 Syntax for commit messages
@@ -114,7 +114,7 @@ Syntax for commit messages
 * `style:` for style changes.
 
 
-#Troubleshooting
+<a name="troubleshooting">Troubleshooting</a>
 ---------------------
 
 If you encounter errors attempting to set up this database on a Windows PC please read the following.
@@ -132,7 +132,7 @@ Make sure to have Postgresql installed on your computer. If you receive an error
 5. `vagrant ssh`
 6. Continue the setup as normal
 
-#Copyright and license
+<a name="licensing">Copyright and Licensing</a>
 ---------------------
 
 Code and documentation copyright 2016 Robert King, Jacky Liang, Troy Mullins, and Thomas Norby. Code released under [the MIT license](https://github.com/Mullinst/SER-FP/blob/master/LICENSE).
